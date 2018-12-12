@@ -1,4 +1,4 @@
-## Devify
+## Webify
 - A website that allows users to track other people's comments on the hottest songs on Spotify at the moment
 - Built with Mongo, Node, and Express
 
