@@ -41,6 +41,7 @@ router.get("/songs", async function(req, res) {
   //songs path
   let access_token = req.query.access_token; //pulls access token from header. If possible maybe make the access token a cookie?
   let data = await getUserInfo(access_token); //this will return a promise passing in the options object and returning the resulting data
+  let AllSharedSongs = await MainSongFeedCollection.getAllSharedSongs()
 
   let profilePicture = "/public/img/no-profile-picture-icon.jpg"; //if the image array is zero that means there is no image and should default to this
   if (data.images.length === 1) {
@@ -53,7 +54,7 @@ router.get("/songs", async function(req, res) {
     Name: data.display_name,
     followers: data.followers.total,
     WebName: data.display_name,
-    commentData: TestingCollection
+    commentData: AllSharedSongs
   });
 });
 
