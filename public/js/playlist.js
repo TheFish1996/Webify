@@ -1,4 +1,4 @@
-// $.ajax({            //commented this out because it was causing issues
+// $.ajax({            //commented this out because it was causing issues and not needed
 //   url: "https://api.spotify.com/v1/playlists/37i9dQZEVXbMDoHDwVN2tF?market=US",
 //   headers: {
 //     Authorization: "Bearer " + document.cookie
