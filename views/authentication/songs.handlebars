@@ -42,6 +42,7 @@
             <div class="container margin-down">
                 {{#each commentData}}
                 <div class="row border border-success user-comment">
+                    <input type="hidden" name="uniqueCommentid" value={{_id}} id="id_placeholder">
                     <div class="col-2 top-padding">
                         <img src="/public/img/no-profile-picture-icon.jpg" height="85" width="85" class="rounded-circle">
                     </div>

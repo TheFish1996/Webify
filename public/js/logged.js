@@ -7,3 +7,10 @@ function getToken() {
   return token;
 }
 
+(function ($){
+
+  console.log($("#id_placeholder").val()) 
+
+})(jQuery);
+
+
