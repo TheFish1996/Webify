@@ -54,10 +54,15 @@ router.get("/songs", async function(req, res) {
     commentData: MainSongFeedCollection
   });
 });
+
+
 router.get("/UsTop50", async (req, res) => {
   const access_token = req.headers.cookie;
   if (access_token) {
     let data = await UsTop50(access_token);
+    for(let i = 0; i < data.length; i++){
+      console.log(data[i].track.album.images)
+    }
 
     let first5Songs = data.slice(0,5);
     let sixThrough10 = data.slice(5,10);
@@ -84,6 +89,7 @@ router.get("/UsTop50", async (req, res) => {
       fortyoneThrough45: fortyoneThrough45,
       fortysixThrough50: fortysixThrough50 
     })
+
   } else {
     console.log("u dont have an access token");
   }
@@ -124,6 +130,7 @@ router.post("/songs", async (req, res) => {
   const access_token = req.headers.cookie;
   const data = req.body;
   if (access_token) {
+    console.log("success!!!!! Posted to this route!!!!!")
     console.log("u have an access token");
   } else {
     console.log("u dont have an access token");
