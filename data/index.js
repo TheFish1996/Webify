@@ -1,7 +1,7 @@
 const userData = require("./users")
-const songData = require("./songsMongo")
+const songsSharedData = require("./songsMongo")
 
 module.exports = {
     userData: userData,
-    songData: songData 
+    songsSharedData: songsSharedData 
 }

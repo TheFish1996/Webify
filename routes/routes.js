@@ -3,12 +3,13 @@ const router = express.Router();
 const request = require("request");
 const querystring = require("querystring");
 const { getUserInfo, UsTop50, GlobalTop50, GlobalViral50, UsViral50  } = require("../routes/Spotify-Routes/spotifyRoutes");
-const MainSongFeedCollection = require("../mockData");
+const TestingCollection = require("../mockData");
+const AlldataCollections = require("../data");
+const MainSongFeedCollection = AlldataCollections.songsSharedData;
 
 const client_id = "0edee0583a08407fa148378bb88dcf68"; // Your client id thats provided form our application
 const client_secret = "7807b53ecdff4da3a2325ce589b798d2"; // Your secret id thats provided form our application
 const redirect_uri = "http://localhost:3000/callback"; // Your redirect uri thats added to our app via spotify. If the redirect uri isnt added to spotify acount app, it wont work
-authorized = false;
 
 /******************************************************************************************************************
  *
@@ -51,7 +52,7 @@ router.get("/songs", async function(req, res) {
     Name: data.display_name,
     followers: data.followers.total,
     WebName: data.display_name,
-    commentData: MainSongFeedCollection
+    commentData: TestingCollection
   });
 });
 
@@ -60,6 +61,8 @@ router.get("/UsTop50", async (req, res) => {
   const access_token = req.headers.cookie;
   if (access_token) {
     let data = await UsTop50(access_token);
+    let user_Info = await getUserInfo(access_token);
+
     for(let i = 0; i < data.length; i++){
       console.log(data[i].track.album.images)
     }
@@ -77,7 +80,6 @@ router.get("/UsTop50", async (req, res) => {
 
     console.log("u have an access token");
     res.render("authentication/AllPlaylists" ,{
-      allSongs: data,
       first5Songs: first5Songs,
       sixthrough10: sixThrough10, 
       ellevenThrough15: elThrough15, 
@@ -87,7 +89,9 @@ router.get("/UsTop50", async (req, res) => {
       thirtyoneThrough35: thirtyoneThrough35,
       thirtysixThrough40: thirtysixThrough40, 
       fortyoneThrough45: fortyoneThrough45,
-      fortysixThrough50: fortysixThrough50 
+      fortysixThrough50: fortysixThrough50,
+      Selected_Category: "UsTop50",
+      User: user_Info.display_name
     })
 
   } else {
@@ -98,6 +102,7 @@ router.get("/GlobalTop50", async (req, res) => {
   const access_token = req.headers.cookie;
   if (access_token) {
     let data = await GlobalTop50(access_token);
+    let user_Info = await getUserInfo(access_token);
 
     let first5Songs = data.slice(0,5);
     let sixThrough10 = data.slice(5,10);
@@ -112,7 +117,6 @@ router.get("/GlobalTop50", async (req, res) => {
 
     console.log("u have an access token");
     res.render("authentication/AllPlaylists" ,{
-      allSongs: data,
       first5Songs: first5Songs,
       sixthrough10: sixThrough10, 
       ellevenThrough15: elThrough15, 
@@ -122,7 +126,9 @@ router.get("/GlobalTop50", async (req, res) => {
       thirtyoneThrough35: thirtyoneThrough35,
       thirtysixThrough40: thirtysixThrough40, 
       fortyoneThrough45: fortyoneThrough45,
-      fortysixThrough50: fortysixThrough50 
+      fortysixThrough50: fortysixThrough50,
+      Selected_Category: "GlobalTop50",
+      User: user_Info.display_name 
     })
 
   } else {
@@ -133,6 +139,7 @@ router.get("/GlobalViral50", async (req, res) => {
   const access_token = req.headers.cookie;
   if (access_token) {
     let data = await GlobalViral50(access_token);
+    let user_Info = await getUserInfo(access_token);
 
     let first5Songs = data.slice(0,5);
     let sixThrough10 = data.slice(5,10);
@@ -147,7 +154,6 @@ router.get("/GlobalViral50", async (req, res) => {
 
     console.log("u have an access token");
     res.render("authentication/AllPlaylists" ,{
-      allSongs: data,
       first5Songs: first5Songs,
       sixthrough10: sixThrough10, 
       ellevenThrough15: elThrough15, 
@@ -157,7 +163,9 @@ router.get("/GlobalViral50", async (req, res) => {
       thirtyoneThrough35: thirtyoneThrough35,
       thirtysixThrough40: thirtysixThrough40, 
       fortyoneThrough45: fortyoneThrough45,
-      fortysixThrough50: fortysixThrough50 
+      fortysixThrough50: fortysixThrough50,
+      Selected_Category: "GlobalViral50",
+      User: user_Info.display_name  
     })
 
   } else {
@@ -169,6 +177,7 @@ router.get("/UnitedStatesViral50", async (req, res) => {
   const access_token = req.headers.cookie;
   if (access_token) {
     let data = await UsViral50(access_token);
+    let user_Info = await getUserInfo(access_token);
 
     let first5Songs = data.slice(0,5);
     let sixThrough10 = data.slice(5,10);
@@ -183,7 +192,6 @@ router.get("/UnitedStatesViral50", async (req, res) => {
 
     console.log("u have an access token");
     res.render("authentication/AllPlaylists" ,{
-      allSongs: data,
       first5Songs: first5Songs,
       sixthrough10: sixThrough10, 
       ellevenThrough15: elThrough15, 
@@ -193,7 +201,9 @@ router.get("/UnitedStatesViral50", async (req, res) => {
       thirtyoneThrough35: thirtyoneThrough35,
       thirtysixThrough40: thirtysixThrough40, 
       fortyoneThrough45: fortyoneThrough45,
-      fortysixThrough50: fortysixThrough50 
+      fortysixThrough50: fortysixThrough50,
+      Selected_Category: "UnitedStatesViral50",
+      User: user_Info.display_name  
     })
 
   } else {
@@ -210,7 +220,12 @@ router.post("/songs", async (req, res) => {
   const access_token = req.headers.cookie;
   const data = req.body;
   if (access_token) {
-    console.log("success!!!!! Posted to this route!!!!!")
+    let Users_comment = req.body["users-submitted-comment"]  //gets users comment from form post
+    let Submitted_category = req.body["Category"]     //gets category submitted from, form post
+    let UserThatSubmitted = req.body["User"]         //specific user that submitted the post from form post
+    console.log(Users_comment) 
+    console.log(Submitted_category) 
+    console.log(UserThatSubmitted) 
     console.log("u have an access token");
   } else {
     console.log("u dont have an access token");
