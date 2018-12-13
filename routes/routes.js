@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const request = require("request");
 const querystring = require("querystring");
-const { getUserInfo } = require("../routes/Spotify-Routes/spotifyRoutes");
+const { getUserInfo, UsTop50  } = require("../routes/Spotify-Routes/spotifyRoutes");
 const MainSongFeedCollection = require("../mockData");
 
 const client_id = "0edee0583a08407fa148378bb88dcf68"; // Your client id thats provided form our application
@@ -57,7 +57,33 @@ router.get("/songs", async function(req, res) {
 router.get("/UsTop50", async (req, res) => {
   const access_token = req.headers.cookie;
   if (access_token) {
+    let data = await UsTop50(access_token);
+
+    let first5Songs = data.slice(0,5);
+    let sixThrough10 = data.slice(5,10);
+    let elThrough15 = data.slice(10,15)
+    let sixtThrough20 = data.slice(15,20);
+    let twenThrough25 = data.slice(20,25);
+    let twenThrough30 = data.slice(25,30);
+    let thirtyoneThrough35 = data.slice(30,35);
+    let thirtysixThrough40 = data.slice(35,40);
+    let fortyoneThrough45 = data.slice(40,45);
+    let fortysixThrough50 = data.slice(45,50);
+
     console.log("u have an access token");
+    res.render("authentication/UsTop50" ,{
+      allSongs: data,
+      first5Songs: first5Songs,
+      sixthrough10: sixThrough10, 
+      ellevenThrough15: elThrough15, 
+      sixteenThrough20: sixtThrough20,
+      twentyThrough25: twenThrough25, 
+      twenThrough30: twenThrough30, 
+      thirtyoneThrough35: thirtyoneThrough35,
+      thirtysixThrough40: thirtysixThrough40, 
+      fortyoneThrough45: fortyoneThrough45,
+      fortysixThrough50: fortysixThrough50 
+    })
   } else {
     console.log("u dont have an access token");
   }
@@ -65,6 +91,8 @@ router.get("/UsTop50", async (req, res) => {
 router.get("/GlobalTop50", async (req, res) => {
   const access_token = req.headers.cookie;
   if (access_token) {
+
+    res.render("authentication/UsTop50")
     console.log("u have an access token");
   } else {
     console.log("u dont have an access token");
