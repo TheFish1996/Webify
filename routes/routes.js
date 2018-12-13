@@ -47,6 +47,7 @@ router.get("/songs", async function(req, res) {
     profilePicture = data.images[0].url;
   }
 
+
   res.render("authentication/songs", {
     profilePicture: profilePicture,
     Name: data.display_name,
@@ -62,10 +63,6 @@ router.get("/UsTop50", async (req, res) => {
   if (access_token) {
     let data = await UsTop50(access_token);
     let user_Info = await getUserInfo(access_token);
-
-    for(let i = 0; i < data.length; i++){
-      console.log(data[i].track.album.images)
-    }
 
     let first5Songs = data.slice(0,5);
     let sixThrough10 = data.slice(5,10);
@@ -223,9 +220,71 @@ router.post("/songs", async (req, res) => {
     let Users_comment = req.body["users-submitted-comment"]  //gets users comment from form post
     let Submitted_category = req.body["Category"]     //gets category submitted from, form post
     let UserThatSubmitted = req.body["User"]         //specific user that submitted the post from form post
-    console.log(Users_comment) 
-    console.log(Submitted_category) 
-    console.log(UserThatSubmitted) 
+    let songReferenceID = req.body["songReferenceId"]  //gets the song reference id from the post from form
+    let profilePicture = "/public/img/no-profile-picture-icon.jpg"; //if the image array is zero that means there is no image and should default to this, just so it can be added to database
+    let Artist_Name;  //Artist name
+    let Song_Name;   //song name
+    let Album_Cover;  //song name
+    let Stream_url;  //songname
+    
+
+    try {
+      let user_Info = await getUserInfo(access_token);
+      if (user_Info.images.length === 1) {
+        profilePicture = user_Info.images[0].url;
+      } 
+      
+    } catch (error) {
+       throw "Something went wrong"
+    }
+     
+
+
+    try {
+      let CorrectAPIData;  //api data comparison
+
+      //below probably could be converted to a "switch"
+      if(Submitted_category === "UsTop50") {          //based on which category it is we compare it to every playlist differently to the api to get our data back
+        CorrectAPIData = await UsTop50(access_token); 
+
+      } else if (Submitted_category === "GlobalTop50" ) {
+        CorrectAPIData = await GlobalTop50(access_token);
+
+      } else if(Submitted_category === "GlobalViral50") {
+        CorrectAPIData = await GlobalViral50(access_token);
+
+      } else if(Submitted_category === "UnitedStatesViral50"){
+        CorrectAPIData = await UsViral50(access_token);
+
+      }
+
+
+        for(let i=0; i < CorrectAPIData.length; i++){
+          let songID = CorrectAPIData[i].track.id    //finds where the song matches in the correct list data
+          if(songID === songReferenceID) {
+            let otherData = CorrectAPIData[i].track
+            Artist_Name = otherData.artists[0].name
+            Album_Cover = otherData.album.images[0].url
+            Song_Name =  otherData.name
+            Stream_url = `https://open.spotify.com/embed/track/${songID}`
+          }
+        }
+
+        await MainSongFeedCollection.addSong(UserThatSubmitted, profilePicture, Users_comment, Submitted_category, Artist_Name, Song_Name, Album_Cover, Stream_url)  //adding all data to database
+      
+    } catch (error) {
+        throw "Something went wrong";
+    }
+
+    // console.log(Artist_Name)
+    // console.log(Album_Cover)
+    // console.log(Song_Name)
+    // console.log(Stream_url)
+    // console.log(Users_comment) 
+    // console.log(Submitted_category) 
+    // console.log(UserThatSubmitted)
+    // console.log(profilePicture)
+
     console.log("u have an access token");
   } else {
     console.log("u dont have an access token");

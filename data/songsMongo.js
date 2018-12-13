@@ -5,11 +5,12 @@ const SharedSongs = collections.SharedSongs
 const uuid = require("node-uuid")
 
 
-const addSong = async (user, comment, category, Artist_Name, song_name, Album_Cover, Stream_Url) => {
+const addSong = async (user, Profile_Picture, comment, category, Artist_Name, song_name, Album_Cover, Stream_Url) => {
 
     let newSharedSong = {
-        _id: uuid(), //id of song is sptofys specific song reference code cause they all have a unique song reference id
+        _id: uuid(), //unique id not pertained to song
         User: user,
+        User_profile_picture: Profile_Picture,
         Shared_Commment: comment,
         Category: category,
         Artist_name: Artist_Name,
@@ -17,9 +18,6 @@ const addSong = async (user, comment, category, Artist_Name, song_name, Album_Co
         Album_cover_url: Album_Cover,
         Stream_url: Stream_Url,
         number_dailyplays: 10,
-        number_Comments: function() {
-            return this.Comments.length;
-        },
         Comments: [
           {
             _id: "e423iu2jkd",
@@ -27,7 +25,10 @@ const addSong = async (user, comment, category, Artist_Name, song_name, Album_Co
             UserID: "SpotifyUsername",
             Time: "2018-04-23"
           }
-        ]
+        ],
+        number_Comments: function() {
+            return this.Comments.length;  //this doesnt work, dont know why
+        },
       }
 
     try {

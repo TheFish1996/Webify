@@ -30,7 +30,12 @@
         console.log(buttonParentID)
         let findAttribute =  $(`#${buttonParentID}`).find("#Name")  //finds the attribute under this id
         let getNameOfSong = findAttribute[0].textContent  //gets text content
-        $("#SongName").text("Sharing Song:  " + getNameOfSong)
+        $("#SongName").text("Sharing Song:  " + getNameOfSong) //adds the name of the song to the popup
+
+        let findSongid = $(`#${buttonParentID}`).find("input#songid").val()  //finds song id for form to then send back for us to use\
+        $("#passBackId").attr("value", findSongid)   //sends the id to the input field in the form
+
+       
 
     });   
 
