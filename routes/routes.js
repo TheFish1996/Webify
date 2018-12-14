@@ -13,6 +13,8 @@ const {
 const TestingCollection = require("../mockData");
 const AlldataCollections = require("../data");
 const { addSong, getAllSharedSongs, appendComment } = require("../data/songsMongo");
+const { addUser, getUser} = require("../data/users");
+
 
 const client_id = "0edee0583a08407fa148378bb88dcf68"; // Your client id thats provided form our application
 const client_secret = "7807b53ecdff4da3a2325ce589b798d2"; // Your secret id thats provided form our application
@@ -49,10 +51,27 @@ router.get("/songs", async function(req, res) {
   let access_token = req.query.access_token; //pulls access token from header. If possible maybe make the access token a cookie?
   let data = await getUserInfo(access_token); //this will return a promise passing in the options object and returning the resulting data
   let AllSharedSongs = await getAllSharedSongs();
-
   let profilePicture = "/public/img/no-profile-picture-icon.jpg"; //if the image array is zero that means there is no image and should default to this
   if (data.images.length === 1) {
     profilePicture = data.images[0].url;
+  }
+
+  //find user by id
+  const foundUser = await getUser(data.display_name)
+  if(foundUser){
+    console.log("user found")
+  }
+  else{
+    console.log("adding a new user..")
+    const newUser = await addUser(data.display_name)
+    console.log(newUser)
+
+  }
+  
+
+  if(data.display_name){
+    //find user by username
+    
   }
 
   res.render("authentication/songs", {
