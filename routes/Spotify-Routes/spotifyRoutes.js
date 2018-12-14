@@ -8,8 +8,8 @@ const getUserInfo = async accessToken => {
     headers: { Authorization: "Bearer " + accessToken },
     json: true
   };
-  let something = await rp(options);
-  return something;
+  let data = await rp(options);
+  return data;
 };
 
 const UsTop50 = async accessToken => {

@@ -12,7 +12,7 @@ const {
 } = require("../routes/Spotify-Routes/spotifyRoutes");
 const TestingCollection = require("../mockData");
 const AlldataCollections = require("../data");
-const { addSong, getAllSharedSongs } = require("../data/songsMongo");
+const { addSong, getAllSharedSongs, appendComment } = require("../data/songsMongo");
 
 const client_id = "0edee0583a08407fa148378bb88dcf68"; // Your client id thats provided form our application
 const client_secret = "7807b53ecdff4da3a2325ce589b798d2"; // Your secret id thats provided form our application
@@ -256,9 +256,8 @@ router.post("/songs/comments", async (req, res) => {
     let UserPostingNewComment = req.body.UserPostingNewComment  //User appending to comments
     let commentText = req.body.newlyAddedComment     //comment word 
     
-    console.log(ReferenceIDDatabase);
-    console.log(UserPostingNewComment);
-    console.log(commentText);
+    let appendedComment = await appendComment(ReferenceIDDatabase, UserPostingNewComment,commentText)
+    res.send(appendedComment)
 
     console.log("u have an access token");
   } else {
