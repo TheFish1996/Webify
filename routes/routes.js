@@ -222,11 +222,15 @@ router.post("/songs", async (req, res) => {
     let Submitted_category = req.body["Category"]     //gets category submitted from, form post
     let UserThatSubmitted = req.body["User"]         //specific user that submitted the post from form post
     let songReferenceID = req.body["songReferenceId"]  //gets the song reference id from the post from form
+    console.log(songReferenceID)
     let profilePicture = "/public/img/no-profile-picture-icon.jpg"; //if the image array is zero that means there is no image and should default to this, just so it can be added to database
     let Artist_Name;  //Artist name
     let Song_Name;   //song name
     let Album_Cover;  //song name
     let Stream_url;  //songname
+
+   // console.log(req.body.users-submitted-comment)
+    console.log(req.body.Category)
     
 
     try {
@@ -295,6 +299,8 @@ router.post("/songs/comments", async (req, res) => {
   const access_token = req.headers.cookie;
   const data = req.body;
   if (access_token) {
+    let ReferenceIDDatabase = req.body.dataBaseID
+    console.log(ReferenceIDDatabase)
     console.log("u have an access token");
   } else {
     console.log("u dont have an access token");

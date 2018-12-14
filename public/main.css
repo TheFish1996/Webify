@@ -148,6 +148,36 @@ u {
     padding-top: 10px;
 }
 
+.comments-padding {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+#song0 {
+    border-color: #28a745;
+    border-width: 1px;
+}
+
+.view-comments-title{
+    background: -webkit-linear-gradient(to right, #000000, #087508); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #000000, #087508);
+    border-bottom: 0 none;
+}
+.content-style {
+    border: 3px solid transparent;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-image: linear-gradient(to right, #087508, #000000);
+    border-image-slice: 1;
+}
+
+.modal-body-style{
+    border-top: 2px solid transparent;
+    border-image: linear-gradient(to right, #087508, #000000);
+    border-image-slice: 1;
+}
+
+
 /*
 ==============================================
 Playlist styling
@@ -181,6 +211,8 @@ h5:hover {
     overflow:visible;
     white-space: normal;
 }
+
+
 
 
 
