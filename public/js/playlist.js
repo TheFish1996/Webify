@@ -42,6 +42,7 @@
              }
           });
 
+         $("#ModalCenter").modal("hide") 
 
     })
     
