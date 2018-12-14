@@ -2,10 +2,17 @@ const express = require("express");
 const router = express.Router();
 const request = require("request");
 const querystring = require("querystring");
-const { getUserInfo, UsTop50, GlobalTop50, GlobalViral50, UsViral50, getSpecificSong  } = require("../routes/Spotify-Routes/spotifyRoutes");
+const {
+  getUserInfo,
+  UsTop50,
+  GlobalTop50,
+  GlobalViral50,
+  UsViral50,
+  getSpecificSong
+} = require("../routes/Spotify-Routes/spotifyRoutes");
 const TestingCollection = require("../mockData");
 const AlldataCollections = require("../data");
-const MainSongFeedCollection = AlldataCollections.songsSharedData;
+const { addSong, getAllSharedSongs } = require("../data/songsMongo");
 
 const client_id = "0edee0583a08407fa148378bb88dcf68"; // Your client id thats provided form our application
 const client_secret = "7807b53ecdff4da3a2325ce589b798d2"; // Your secret id thats provided form our application
@@ -41,13 +48,12 @@ router.get("/songs", async function(req, res) {
   //songs path
   let access_token = req.query.access_token; //pulls access token from header. If possible maybe make the access token a cookie?
   let data = await getUserInfo(access_token); //this will return a promise passing in the options object and returning the resulting data
-  let AllSharedSongs = await MainSongFeedCollection.getAllSharedSongs()
+  let AllSharedSongs = await getAllSharedSongs();
 
   let profilePicture = "/public/img/no-profile-picture-icon.jpg"; //if the image array is zero that means there is no image and should default to this
   if (data.images.length === 1) {
     profilePicture = data.images[0].url;
   }
-
 
   res.render("authentication/songs", {
     profilePicture: profilePicture,
@@ -58,40 +64,38 @@ router.get("/songs", async function(req, res) {
   });
 });
 
-
 router.get("/UsTop50", async (req, res) => {
   const access_token = req.headers.cookie;
   if (access_token) {
     let data = await UsTop50(access_token);
     let user_Info = await getUserInfo(access_token);
 
-    let first5Songs = data.slice(0,5);
-    let sixThrough10 = data.slice(5,10);
-    let elThrough15 = data.slice(10,15)
-    let sixtThrough20 = data.slice(15,20);
-    let twenThrough25 = data.slice(20,25);
-    let twenThrough30 = data.slice(25,30);
-    let thirtyoneThrough35 = data.slice(30,35);
-    let thirtysixThrough40 = data.slice(35,40);
-    let fortyoneThrough45 = data.slice(40,45);
-    let fortysixThrough50 = data.slice(45,50);
+    let first5Songs = data.slice(0, 5);
+    let sixThrough10 = data.slice(5, 10);
+    let elThrough15 = data.slice(10, 15);
+    let sixtThrough20 = data.slice(15, 20);
+    let twenThrough25 = data.slice(20, 25);
+    let twenThrough30 = data.slice(25, 30);
+    let thirtyoneThrough35 = data.slice(30, 35);
+    let thirtysixThrough40 = data.slice(35, 40);
+    let fortyoneThrough45 = data.slice(40, 45);
+    let fortysixThrough50 = data.slice(45, 50);
 
     console.log("u have an access token");
-    res.render("authentication/AllPlaylists" ,{
+    res.render("authentication/AllPlaylists", {
       first5Songs: first5Songs,
-      sixthrough10: sixThrough10, 
-      ellevenThrough15: elThrough15, 
+      sixthrough10: sixThrough10,
+      ellevenThrough15: elThrough15,
       sixteenThrough20: sixtThrough20,
-      twentyThrough25: twenThrough25, 
-      twenThrough30: twenThrough30, 
+      twentyThrough25: twenThrough25,
+      twenThrough30: twenThrough30,
       thirtyoneThrough35: thirtyoneThrough35,
-      thirtysixThrough40: thirtysixThrough40, 
+      thirtysixThrough40: thirtysixThrough40,
       fortyoneThrough45: fortyoneThrough45,
       fortysixThrough50: fortysixThrough50,
       Selected_Category: "UsTop50",
       User: user_Info.display_name
-    })
-
+    });
   } else {
     console.log("u dont have an access token");
   }
@@ -102,33 +106,32 @@ router.get("/GlobalTop50", async (req, res) => {
     let data = await GlobalTop50(access_token);
     let user_Info = await getUserInfo(access_token);
 
-    let first5Songs = data.slice(0,5);
-    let sixThrough10 = data.slice(5,10);
-    let elThrough15 = data.slice(10,15)
-    let sixtThrough20 = data.slice(15,20);
-    let twenThrough25 = data.slice(20,25);
-    let twenThrough30 = data.slice(25,30);
-    let thirtyoneThrough35 = data.slice(30,35);
-    let thirtysixThrough40 = data.slice(35,40);
-    let fortyoneThrough45 = data.slice(40,45);
-    let fortysixThrough50 = data.slice(45,50);
+    let first5Songs = data.slice(0, 5);
+    let sixThrough10 = data.slice(5, 10);
+    let elThrough15 = data.slice(10, 15);
+    let sixtThrough20 = data.slice(15, 20);
+    let twenThrough25 = data.slice(20, 25);
+    let twenThrough30 = data.slice(25, 30);
+    let thirtyoneThrough35 = data.slice(30, 35);
+    let thirtysixThrough40 = data.slice(35, 40);
+    let fortyoneThrough45 = data.slice(40, 45);
+    let fortysixThrough50 = data.slice(45, 50);
 
     console.log("u have an access token");
-    res.render("authentication/AllPlaylists" ,{
+    res.render("authentication/AllPlaylists", {
       first5Songs: first5Songs,
-      sixthrough10: sixThrough10, 
-      ellevenThrough15: elThrough15, 
+      sixthrough10: sixThrough10,
+      ellevenThrough15: elThrough15,
       sixteenThrough20: sixtThrough20,
-      twentyThrough25: twenThrough25, 
-      twenThrough30: twenThrough30, 
+      twentyThrough25: twenThrough25,
+      twenThrough30: twenThrough30,
       thirtyoneThrough35: thirtyoneThrough35,
-      thirtysixThrough40: thirtysixThrough40, 
+      thirtysixThrough40: thirtysixThrough40,
       fortyoneThrough45: fortyoneThrough45,
       fortysixThrough50: fortysixThrough50,
       Selected_Category: "GlobalTop50",
-      User: user_Info.display_name 
-    })
-
+      User: user_Info.display_name
+    });
   } else {
     console.log("u dont have an access token");
   }
@@ -139,33 +142,32 @@ router.get("/GlobalViral50", async (req, res) => {
     let data = await GlobalViral50(access_token);
     let user_Info = await getUserInfo(access_token);
 
-    let first5Songs = data.slice(0,5);
-    let sixThrough10 = data.slice(5,10);
-    let elThrough15 = data.slice(10,15)
-    let sixtThrough20 = data.slice(15,20);
-    let twenThrough25 = data.slice(20,25);
-    let twenThrough30 = data.slice(25,30);
-    let thirtyoneThrough35 = data.slice(30,35);
-    let thirtysixThrough40 = data.slice(35,40);
-    let fortyoneThrough45 = data.slice(40,45);
-    let fortysixThrough50 = data.slice(45,50);
+    let first5Songs = data.slice(0, 5);
+    let sixThrough10 = data.slice(5, 10);
+    let elThrough15 = data.slice(10, 15);
+    let sixtThrough20 = data.slice(15, 20);
+    let twenThrough25 = data.slice(20, 25);
+    let twenThrough30 = data.slice(25, 30);
+    let thirtyoneThrough35 = data.slice(30, 35);
+    let thirtysixThrough40 = data.slice(35, 40);
+    let fortyoneThrough45 = data.slice(40, 45);
+    let fortysixThrough50 = data.slice(45, 50);
 
     console.log("u have an access token");
-    res.render("authentication/AllPlaylists" ,{
+    res.render("authentication/AllPlaylists", {
       first5Songs: first5Songs,
-      sixthrough10: sixThrough10, 
-      ellevenThrough15: elThrough15, 
+      sixthrough10: sixThrough10,
+      ellevenThrough15: elThrough15,
       sixteenThrough20: sixtThrough20,
-      twentyThrough25: twenThrough25, 
-      twenThrough30: twenThrough30, 
+      twentyThrough25: twenThrough25,
+      twenThrough30: twenThrough30,
       thirtyoneThrough35: thirtyoneThrough35,
-      thirtysixThrough40: thirtysixThrough40, 
+      thirtysixThrough40: thirtysixThrough40,
       fortyoneThrough45: fortyoneThrough45,
       fortysixThrough50: fortysixThrough50,
       Selected_Category: "GlobalViral50",
-      User: user_Info.display_name  
-    })
-
+      User: user_Info.display_name
+    });
   } else {
     console.log("u dont have an access token");
   }
@@ -177,33 +179,32 @@ router.get("/UnitedStatesViral50", async (req, res) => {
     let data = await UsViral50(access_token);
     let user_Info = await getUserInfo(access_token);
 
-    let first5Songs = data.slice(0,5);
-    let sixThrough10 = data.slice(5,10);
-    let elThrough15 = data.slice(10,15)
-    let sixtThrough20 = data.slice(15,20);
-    let twenThrough25 = data.slice(20,25);
-    let twenThrough30 = data.slice(25,30);
-    let thirtyoneThrough35 = data.slice(30,35);
-    let thirtysixThrough40 = data.slice(35,40);
-    let fortyoneThrough45 = data.slice(40,45);
-    let fortysixThrough50 = data.slice(45,50);
+    let first5Songs = data.slice(0, 5);
+    let sixThrough10 = data.slice(5, 10);
+    let elThrough15 = data.slice(10, 15);
+    let sixtThrough20 = data.slice(15, 20);
+    let twenThrough25 = data.slice(20, 25);
+    let twenThrough30 = data.slice(25, 30);
+    let thirtyoneThrough35 = data.slice(30, 35);
+    let thirtysixThrough40 = data.slice(35, 40);
+    let fortyoneThrough45 = data.slice(40, 45);
+    let fortysixThrough50 = data.slice(45, 50);
 
     console.log("u have an access token");
-    res.render("authentication/AllPlaylists" ,{
+    res.render("authentication/AllPlaylists", {
       first5Songs: first5Songs,
-      sixthrough10: sixThrough10, 
-      ellevenThrough15: elThrough15, 
+      sixthrough10: sixThrough10,
+      ellevenThrough15: elThrough15,
       sixteenThrough20: sixtThrough20,
-      twentyThrough25: twenThrough25, 
-      twenThrough30: twenThrough30, 
+      twentyThrough25: twenThrough25,
+      twenThrough30: twenThrough30,
       thirtyoneThrough35: thirtyoneThrough35,
-      thirtysixThrough40: thirtysixThrough40, 
+      thirtysixThrough40: thirtysixThrough40,
       fortyoneThrough45: fortyoneThrough45,
       fortysixThrough50: fortysixThrough50,
       Selected_Category: "UnitedStatesViral50",
-      User: user_Info.display_name  
-    })
-
+      User: user_Info.display_name
+    });
   } else {
     console.log("u dont have an access token");
   }
@@ -218,57 +219,43 @@ router.post("/songs", async (req, res) => {
   const access_token = req.headers.cookie;
   const data = req.body;
   if (access_token) {
-    let Users_comment = req.body["users-submitted-comment"]  //gets users comment from form post
-    let Submitted_category = req.body["Category"]     //gets category submitted from, form post
-    let UserThatSubmitted = req.body["User"]         //specific user that submitted the post from form post
-    let songReferenceID = req.body["songReferenceId"]  //gets the song reference id from the post from form
-    console.log(songReferenceID)
+    let Users_comment = req.body["users-submitted-comment"]; //gets users comment from form post
+    let Submitted_category = req.body["Category"]; //gets category submitted from, form post
+    let UserThatSubmitted = req.body["User"]; //specific user that submitted the post from form post
+    let songReferenceID = req.body["songReferenceId"]; //gets the song reference id from the post from form
     let profilePicture = "/public/img/no-profile-picture-icon.jpg"; //if the image array is zero that means there is no image and should default to this, just so it can be added to database
-    let Artist_Name;  //Artist name
-    let Song_Name;   //song name
-    let Album_Cover;  //song name
-    let Stream_url;  //songname
-
-   // console.log(req.body.users-submitted-comment)
-    console.log(req.body.Category)
-    
 
     try {
       let user_Info = await getUserInfo(access_token);
-      if (user_Info.images.length === 1) {
+      if (user_Info.images.length === 1)
         profilePicture = user_Info.images[0].url;
-      } 
-      
+
+      //Database related information
+      let CorrectAPIData = await getSpecificSong(access_token, songReferenceID);
+      let Artist_Name = CorrectAPIData.album.artists[0].name;
+      let Album_Cover = CorrectAPIData.album.images[0].url;
+      let Song_Name = CorrectAPIData.name;
+      let Stream_url = `https://open.spotify.com/embed/track/${songReferenceID}`;
+
+      console.log("artist:", Artist_Name);
+      console.log("Album cover:", Album_Cover);
+      console.log("Song name: ", Song_Name);
+      console.log("Stream_URL:", Stream_url);
+
+      await addSong(
+        UserThatSubmitted,
+        profilePicture,
+        Users_comment,
+        Submitted_category,
+        Artist_Name,
+        Song_Name,
+        Album_Cover,
+        Stream_url
+      ); //adding all data to database
     } catch (error) {
-       throw "Something went wrong"
-    }
-     
-
-
-    try {
-      let CorrectAPIData = await getSpecificSong(access_token, songReferenceID)
-      let Artist_Name = CorrectAPIData.album.artists[0].name
-      let Album_Cover = CorrectAPIData.album.images[0].url
-      let Song_Name = CorrectAPIData.name
-      let Stream_url = `https://open.spotify.com/embed/track/${songReferenceID}`
-
-
-        await MainSongFeedCollection.addSong(UserThatSubmitted, profilePicture, Users_comment, Submitted_category, Artist_Name, Song_Name, Album_Cover, Stream_url)  //adding all data to database
-      
-    } catch (error) {
-        throw "Something went wrong";
+      throw ("Something went wrong: ", error);
     }
 
-    // console.log(Artist_Name)
-    // console.log(Album_Cover)
-    // console.log(Song_Name)
-    // console.log(Stream_url)
-    // console.log(Users_comment) 
-    // console.log(Submitted_category) 
-    // console.log(UserThatSubmitted)
-    // console.log(profilePicture)
-
-    console.log("u have an access token");
   } else {
     console.log("u dont have an access token");
   }
@@ -277,8 +264,8 @@ router.post("/songs/comments", async (req, res) => {
   const access_token = req.headers.cookie;
   const data = req.body;
   if (access_token) {
-    let ReferenceIDDatabase = req.body.dataBaseID
-    console.log(ReferenceIDDatabase)
+    let ReferenceIDDatabase = req.body.dataBaseID;
+    console.log(ReferenceIDDatabase);
     console.log("u have an access token");
   } else {
     console.log("u dont have an access token");
