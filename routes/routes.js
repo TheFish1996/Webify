@@ -252,8 +252,14 @@ router.post("/songs/comments", async (req, res) => {
   const access_token = req.headers.cookie;
   const data = req.body;
   if (access_token) {
-    let ReferenceIDDatabase = req.body.dataBaseID;
+    let ReferenceIDDatabase = req.body.dataBaseID;  //database reference id
+    let UserPostingNewComment = req.body.UserPostingNewComment  //User appending to comments
+    let commentText = req.body.newlyAddedComment     //comment word 
+    
     console.log(ReferenceIDDatabase);
+    console.log(UserPostingNewComment);
+    console.log(commentText);
+
     console.log("u have an access token");
   } else {
     console.log("u dont have an access token");

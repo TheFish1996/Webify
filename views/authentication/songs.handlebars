@@ -52,38 +52,42 @@
                         <p style="color: white"><u>Category:</u>{{Category}}</p>
                         <iframe src={{Stream_url}} width="450" height="75" frameborder="0" allowtransparency="true"
                             allow="encrypted-media" id="song0"></iframe>
-                        <a class="btn btn-success text-white comments-padding find-all-comments" data-toggle="modal" data-target="#ModalTop">View Comments</a>
+                        <a class="btn btn-success text-white comments-padding find-all-comments" data-toggle="modal" data-target="#ModalTop{{@index}}">View Comments</a>
                     </div>
+                    <div class="modal fade" id="ModalTop{{@index}}" tabindex="-1" role="dialog" aria-labelledby="ModalTop" aria-hidden="true">
+                        <div class="modal-dialog" role="document" >
+                            <div class="modal-content content-style">
+                                <div class="modal-header view-comments-title">
+                                    <h4 class="text-white modal-title">Comments</h4>
+                                </div>
+                                <div class="modal-body" style="background-color: black">
+                                    {{#each Comments}}
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <p>{{UserID}}</p>
+                                        </div>
+                                        <div class="row">
+                                            <p>{{Text}}</p>
+                                        </div>
+                                        <div clas="row">
+                                            <form id="addingNewComment">
+                                                <div class="form-group">
+                                                    <input type="text" id="newlyMadeComment" name="newlyAddedComment" placeholder="Enter a new comment" size="40">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    {{/each}}        
+                                </div>
+                                <div class="modal-footer modal-body-style" style="background-color: black">
+                                    <button type="submit" class="btn btn-outline-success text-white user-added-comment">Add Comment!</button>
+                                    <button type="button" class="btn btn-outline-success text-white" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
                 </div>
                 {{/each}}
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="ModalTop" tabindex="-1" role="dialog" aria-labelledby="ModalTop" aria-hidden="true">
-        <div class="modal-dialog" role="document" >
-            <div class="modal-content content-style">
-                <div class="modal-header view-comments-title">
-                    <h4 class="text-white modal-title">Comments</h4>
-                </div>
-                <div class="modal-body" style="background-color: black">
-                    <div class="container-fluid">
-                        <p class="text-white">Album url will go here with embeded song or album art</p>
-                        <p class="text-white">Comment 1</p>
-                        <p class="text-white">Comment 1</p>
-                        <p class="text-white">Comment 1</p>
-                        <p class="text-white">Comment 1</p>
-                        <form id="addingNewComment" action="/songs" method="POST">
-                            <div class="form-group">
-                                <input type="text" id="newlyMadeComment" name="newlyAddedComment" placeholder="Enter a new comment" size="40">
-                                <input type="hidden" name="DatabaseId" id="DatabaseReferenceId">
-                            </div>
-                        </form>
-                    </div>      
-                </div>
-                <div class="modal-footer modal-body-style" style="background-color: black">
-                    <button type="submit" class="btn btn-outline-success text-white user-added-comment">Add Comment!</button>
-                    <button type="button" class="btn btn-outline-success text-white" data-dismiss="modal">Close</button>
-                </div>
             </div>
         </div>
     </div>

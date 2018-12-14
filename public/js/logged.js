@@ -9,27 +9,38 @@ function getToken() {
 
 (function ($){
 
-  $(".find-all-comments").click(function() {
+  $(".user-added-comment").click(function(event) {
+    event.preventDefault();
     let classes = $(this).parents()
-    let buttonParentID = classes[1].id //finds the id of the parent class where button was clicked
+    let UserPostingNewComment = $("#Name").text().slice(5)
+    let buttonParentID = classes[4].id //finds the id of the parent class where button was clicked
     let findDatabaseId =  $(`#${buttonParentID}`).find("input#id_placeholder").val() //gets database reference id
-     // console.log(buttonParentID);
-  //  console.log(findDatabaseId)
+     
+    let formData =  $(`#${buttonParentID}`).find("form#addingNewComment").serializeArray()
+    let newlyAddedComment = formData[0].value   //gets new comment posated by user
 
-  $.ajax({
-    type: "Post", 
-    url: "/songs/comments",
-    contentType: 'application/json',
-    processData: false,
-    data: JSON.stringify({dataBaseID: findDatabaseId}),
-    dataType: "json",
-    success: function(body) {
-      //THE DATABASE NEEDS TO RETURN A JSON 
-    },
-    error: function() {
-     console.log("Error hitting the post route for comments");
-    }
- });
+    // console.log(findDatabaseId)
+    // console.log(UserPostingNewComment)
+    //  console.log(newlyAddedComment)
+
+   $.ajax({
+     type: "Post", 
+     url: "/songs/comments",
+     contentType: 'application/json',
+     processData: false,
+     data: JSON.stringify({
+       dataBaseID: findDatabaseId,
+       UserPostingNewComment: UserPostingNewComment,
+       newlyAddedComment: newlyAddedComment
+    }),
+     dataType: "json",
+     success: function(body) {
+       //THE DATABASE NEEDS TO RETURN A JSON 
+     },
+     error: function() {
+      console.log("Error hitting the post route for comments");
+     }
+  });
 
 }); 
   
