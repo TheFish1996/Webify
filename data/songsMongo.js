@@ -4,19 +4,10 @@ const collections = require("../config/mongoCollections");
 const SharedSongs = collections.SharedSongs;
 const uuid = require("node-uuid");
 
-const addSong = async (
-  user,
-  Profile_Picture,
-  comment,
-  category,
-  Artist_Name,
-  song_name,
-  Album_Cover,
-  Stream_Url
-) => {
-  console.log("hit the database");
+//add a song to the database
+async function addSong (user, Profile_Picture, comment, category, Artist_Name, song_name, Album_Cover, Stream_Url) {
 
-  let newSharedSong = {
+  let newSongSchema = {
     _id: uuid(), //unique id not pertained to song
     User: user,
     User_profile_picture: Profile_Picture,
@@ -29,24 +20,19 @@ const addSong = async (
     number_dailyplays: 10,
     Comments: [
       {
-        _id: "e423iu2jkd",
-        Text: "User comment",
-        UserID: "SpotifyUsername",
+        commentId: uuid(),
+        Text: comment,
+        UserID: user,
         Time: "2018-04-23"
       }
-    ],
-    number_Comments: function() {
-      return this.Comments.length; //this doesnt work, dont know why
-    }
+    ]
   };
 
-  try {
-    const collection = await SharedSongs();
-    const insertSharedSong = collection.insertOne(newSharedSong);
-    if (insertSharedSong.insertedCount === 0) throw "Could not add shared song";
-  } catch (e) {
-    throw e;
-  }
+  const songCollection = await SharedSongs();
+  const insertSharedSong = await songCollection.insertOne(newSongSchema);
+  if (insertSharedSong.insertedCount === 0) throw "Could not add shared song";
+  let newId = insertSharedSong.insertedId;
+  return await returnSong(newId);
 };
 
 const getAllSharedSongs = async () => {
@@ -58,19 +44,15 @@ const getAllSharedSongs = async () => {
   }
 };
 
-const getSong = async id => {
-  try {
-    const collection = await SharedSongs();
-    let tasks = collection.findOne({ _id: id });
-    client.close();
-    return tasks;
-  } catch (e) {
-    throw e;
-  }
-};
+async function returnSong(id) {
+  const songCollection = await SharedSongs();
+  const foundSong = await songCollection.findOne({ _id: id }); //mongo query to get the cue
+  if (foundSong === null) throw "could not find that cue"; //throw an err
+  return foundSong; //return said cue
+}
 
 module.exports = {
   addSong,
   getAllSharedSongs,
-  getSong
+  returnSong
 };

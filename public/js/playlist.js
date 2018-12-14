@@ -5,7 +5,6 @@
     $(".button-song").click(function() {
         let classes = $(this).parents()
         let buttonParentID = classes[2].id //finds the id of the parent class where button was clicked
-        console.log(buttonParentID)
         let findAttribute =  $(`#${buttonParentID}`).find("#Name")  //finds the attribute under this id
         let getNameOfSong = findAttribute[0].textContent  //gets text content
         $("#SongName").text("Sharing Song:  " + getNameOfSong) //adds the name of the song to the popup
@@ -34,8 +33,8 @@
              contentType: 'application/json',
              processData: false,
              data: JSON.stringify(SharingObject),
-             dataType: "json",
-             success: function(body) {
+             success: function(data) {
+                 console.log("shared: ", data)
              },
              error: function() {
               console.log("Error hitting the post route for comments");

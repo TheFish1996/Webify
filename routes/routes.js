@@ -217,7 +217,6 @@ router.get("/UnitedStatesViral50", async (req, res) => {
  ******************************************************************************************************************/
 router.post("/songs", async (req, res) => {
   const access_token = req.headers.cookie;
-  const data = req.body;
   if (access_token) {
     let Users_comment = req.body["users-submitted-comment"]; //gets users comment from form post
     let Submitted_category = req.body["Category"]; //gets category submitted from, form post
@@ -230,36 +229,25 @@ router.post("/songs", async (req, res) => {
       if (user_Info.images.length === 1)
         profilePicture = user_Info.images[0].url;
 
-      //Database related information
-      let CorrectAPIData = await getSpecificSong(access_token, songReferenceID);
-      let Artist_Name = CorrectAPIData.album.artists[0].name;
-      let Album_Cover = CorrectAPIData.album.images[0].url;
-      let Song_Name = CorrectAPIData.name;
-      let Stream_url = `https://open.spotify.com/embed/track/${songReferenceID}`;
+      //Song data pulled from spotify
+      const CorrectAPIData = await getSpecificSong(access_token, songReferenceID);
+      const Artist_Name = CorrectAPIData.album.artists[0].name;
+      const Album_Cover = CorrectAPIData.album.images[0].url;
+      const Song_Name = CorrectAPIData.name;
+      const Stream_url = `https://open.spotify.com/embed/track/${songReferenceID}`;
 
-      console.log("artist:", Artist_Name);
-      console.log("Album cover:", Album_Cover);
-      console.log("Song name: ", Song_Name);
-      console.log("Stream_URL:", Stream_url);
 
-      await addSong(
-        UserThatSubmitted,
-        profilePicture,
-        Users_comment,
-        Submitted_category,
-        Artist_Name,
-        Song_Name,
-        Album_Cover,
-        Stream_url
-      ); //adding all data to database
+      //add the song
+      const sharedSong = await addSong(UserThatSubmitted, profilePicture, Users_comment, Submitted_category, Artist_Name, Song_Name, Album_Cover, Stream_url); //adding all data to database
+      res.send(sharedSong);
     } catch (error) {
       throw ("Something went wrong: ", error);
     }
-
-  } else {
-    console.log("u dont have an access token");
-  }
+  } 
+  console.log("you dont have an access token")
 });
+
+//append a comment? dont know yet will figure out next
 router.post("/songs/comments", async (req, res) => {
   const access_token = req.headers.cookie;
   const data = req.body;
