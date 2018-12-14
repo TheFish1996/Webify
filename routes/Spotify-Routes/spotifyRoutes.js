@@ -60,6 +60,20 @@ const UsViral50 = async accessToken => {
   return data.tracks.items;
 };
 
+const getSpecificSong = async (accessToken, IdOfSong) => {
+
+  const options = {
+    //object used to hit spotifys api to get the data we need
+    method: "GET",
+    uri: 	`https://api.spotify.com/v1/tracks/${IdOfSong}?market=US`,
+    headers: { Authorization: "Bearer " + accessToken },
+    json: true
+  };
+  let data = await rp(options);
+  return data;
+
+}
+
 
 
 module.exports = {
@@ -67,5 +81,6 @@ module.exports = {
   UsTop50,
   GlobalTop50,
   GlobalViral50,
-  UsViral50
+  UsViral50,
+  getSpecificSong
 };

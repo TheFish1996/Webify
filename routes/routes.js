@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const request = require("request");
 const querystring = require("querystring");
-const { getUserInfo, UsTop50, GlobalTop50, GlobalViral50, UsViral50  } = require("../routes/Spotify-Routes/spotifyRoutes");
+const { getUserInfo, UsTop50, GlobalTop50, GlobalViral50, UsViral50, getSpecificSong  } = require("../routes/Spotify-Routes/spotifyRoutes");
 const TestingCollection = require("../mockData");
 const AlldataCollections = require("../data");
 const MainSongFeedCollection = AlldataCollections.songsSharedData;
@@ -246,34 +246,12 @@ router.post("/songs", async (req, res) => {
 
 
     try {
-      let CorrectAPIData;  //api data comparison
+      let CorrectAPIData = await getSpecificSong(access_token, songReferenceID)
+      let Artist_Name = CorrectAPIData.album.artists[0].name
+      let Album_Cover = CorrectAPIData.album.images[0].url
+      let Song_Name = CorrectAPIData.name
+      let Stream_url = `https://open.spotify.com/embed/track/${songReferenceID}`
 
-      //below probably could be converted to a "switch"
-      if(Submitted_category === "UsTop50") {          //based on which category it is we compare it to every playlist differently to the api to get our data back
-        CorrectAPIData = await UsTop50(access_token); 
-
-      } else if (Submitted_category === "GlobalTop50" ) {
-        CorrectAPIData = await GlobalTop50(access_token);
-
-      } else if(Submitted_category === "GlobalViral50") {
-        CorrectAPIData = await GlobalViral50(access_token);
-
-      } else if(Submitted_category === "UnitedStatesViral50"){
-        CorrectAPIData = await UsViral50(access_token);
-
-      }
-
-
-        for(let i=0; i < CorrectAPIData.length; i++){
-          let songID = CorrectAPIData[i].track.id    //finds where the song matches in the correct list data
-          if(songID === songReferenceID) {
-            let otherData = CorrectAPIData[i].track
-            Artist_Name = otherData.artists[0].name
-            Album_Cover = otherData.album.images[0].url
-            Song_Name =  otherData.name
-            Stream_url = `https://open.spotify.com/embed/track/${songID}`
-          }
-        }
 
         await MainSongFeedCollection.addSong(UserThatSubmitted, profilePicture, Users_comment, Submitted_category, Artist_Name, Song_Name, Album_Cover, Stream_url)  //adding all data to database
       
