@@ -20,7 +20,8 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><img src="/public/img/if_Asset_23_2342209.png" height="35">Logout</a>
+                    <a id="userLogout" class="nav-link" href="#" onclick="logOut()"><img src="/public/img/if_Asset_23_2342209.png"
+                            height="35">Logout</a>
                 </li>
             </ul>
         </div>
@@ -29,215 +30,225 @@
 <div class="container-fluid margin-playlists">
     <div class="row top-buffer">
         {{#each first5Songs}}
-            {{#with track}}
-                <div class="col-2" id={{@index}}>
-                    <div class="card border-success text-white" style="background-color: black">
-                        <div class="card-header text-center">
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title" id="Name">{{name}}</h5>
-                            <a class="btn btn-outline-success button-song" data-toggle="modal" data-target="#ModalCenter">Share</a>
-                            <input type="hidden" id="songid" value={{id}}>
-                        </div>
-                    </div>
-                    <div class="embed-responsive embed-responsive-1by1 border border-success">
-                        <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{id}}" allowtransparency="true" allow="encrypted-media" id="song0"></iframe>
-                    </div>
+        {{#with track}}
+        <div class="col-2" id={{@index}}>
+            <div class="card border-success text-white" style="background-color: black">
+                <div class="card-header text-center">
                 </div>
-            {{/with}}
+                <div class="card-body">
+                    <h5 class="card-title" id="Name">{{name}}</h5>
+                    <a class="btn btn-outline-success button-song" data-toggle="modal" data-target="#ModalCenter">Share</a>
+                    <input type="hidden" id="songid" value={{id}}>
+                </div>
+            </div>
+            <div class="embed-responsive embed-responsive-1by1 border border-success">
+                <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{id}}"
+                    allowtransparency="true" allow="encrypted-media" id="song0"></iframe>
+            </div>
+        </div>
+        {{/with}}
         {{/each}}
     </div>
     <div class="row top-buffer">
         {{#each sixthrough10}}
-            {{#with track}}
-                <div class="col-2" id="1{{@index}}">
-                    <div class="card border-success text-white" style="background-color: black">
-                        <div class="card-header text-center">
-                            {{popularity}}
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title" id="Name">{{name}}</h5>
-                            <a class="btn btn-outline-success button-song" data-toggle="modal" data-target="#ModalCenter">Share</a>
-                            <input type="hidden" id="songid" value={{id}}>
-                        </div>
-                    </div>
-                    <div class="embed-responsive embed-responsive-1by1 border border-success">
-                        <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{id}}" allowtransparency="true" allow="encrypted-media" id="song0"></iframe>
-                    </div>
+        {{#with track}}
+        <div class="col-2" id="1{{@index}}">
+            <div class="card border-success text-white" style="background-color: black">
+                <div class="card-header text-center">
+                    {{popularity}}
                 </div>
-            {{/with}}
+                <div class="card-body">
+                    <h5 class="card-title" id="Name">{{name}}</h5>
+                    <a class="btn btn-outline-success button-song" data-toggle="modal" data-target="#ModalCenter">Share</a>
+                    <input type="hidden" id="songid" value={{id}}>
+                </div>
+            </div>
+            <div class="embed-responsive embed-responsive-1by1 border border-success">
+                <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{id}}"
+                    allowtransparency="true" allow="encrypted-media" id="song0"></iframe>
+            </div>
+        </div>
+        {{/with}}
         {{/each}}
     </div>
     <div class="row top-buffer">
         {{#each ellevenThrough15}}
-            {{#with track}}
-                <div class="col-2" id="2{{@index}}">
-                    <div class="card border-success text-white" style="background-color: black">
-                        <div class="card-header text-center">
-                            {{popularity}}
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title" id="Name">{{name}}</h5>
-                            <a class="btn btn-outline-success button-song" data-toggle="modal" data-target="#ModalCenter">Share</a>
-                            <input type="hidden" id="songid" value={{id}}>
-                        </div>
-                    </div>
-                    <div class="embed-responsive embed-responsive-1by1 border border-success">
-                        <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{id}}" allowtransparency="true" allow="encrypted-media" id="song0"></iframe>
-                    </div>
+        {{#with track}}
+        <div class="col-2" id="2{{@index}}">
+            <div class="card border-success text-white" style="background-color: black">
+                <div class="card-header text-center">
+                    {{popularity}}
                 </div>
-            {{/with}}
+                <div class="card-body">
+                    <h5 class="card-title" id="Name">{{name}}</h5>
+                    <a class="btn btn-outline-success button-song" data-toggle="modal" data-target="#ModalCenter">Share</a>
+                    <input type="hidden" id="songid" value={{id}}>
+                </div>
+            </div>
+            <div class="embed-responsive embed-responsive-1by1 border border-success">
+                <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{id}}"
+                    allowtransparency="true" allow="encrypted-media" id="song0"></iframe>
+            </div>
+        </div>
+        {{/with}}
         {{/each}}
     </div>
     <div class="row top-buffer">
         {{#each sixteenThrough20}}
-            {{#with track}}
-                <div class="col-2" id="3{{@index}}">
-                    <div class="card border-success text-white" style="background-color: black">
-                        <div class="card-header text-center">
-                            {{popularity}}
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title" id="Name">{{name}}</h5>
-                            <a class="btn btn-outline-success button-song" data-toggle="modal" data-target="#ModalCenter">Share</a>
-                            <input type="hidden" id="songid" value={{id}}>
-                        </div>
-                    </div>
-                    <div class="embed-responsive embed-responsive-1by1 border border-success">
-                        <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{id}}" allowtransparency="true" allow="encrypted-media" id="song0"></iframe>
-                    </div>
+        {{#with track}}
+        <div class="col-2" id="3{{@index}}">
+            <div class="card border-success text-white" style="background-color: black">
+                <div class="card-header text-center">
+                    {{popularity}}
                 </div>
-            {{/with}}
+                <div class="card-body">
+                    <h5 class="card-title" id="Name">{{name}}</h5>
+                    <a class="btn btn-outline-success button-song" data-toggle="modal" data-target="#ModalCenter">Share</a>
+                    <input type="hidden" id="songid" value={{id}}>
+                </div>
+            </div>
+            <div class="embed-responsive embed-responsive-1by1 border border-success">
+                <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{id}}"
+                    allowtransparency="true" allow="encrypted-media" id="song0"></iframe>
+            </div>
+        </div>
+        {{/with}}
         {{/each}}
     </div>
     <div class="row top-buffer">
         {{#each twentyThrough25}}
-            {{#with track}}
-                <div class="col-2" id="4{{@index}}">
-                    <div class="card border-success text-white" style="background-color: black">
-                        <div class="card-header text-center">
-                            {{popularity}}
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title" id="Name">{{name}}</h5>
-                            <a class="btn btn-outline-success button-song" data-toggle="modal" data-target="#ModalCenter">Share</a>
-                            <input type="hidden" id="songid" value={{id}}>
-                        </div>
-                    </div>
-                    <div class="embed-responsive embed-responsive-1by1 border border-success">
-                        <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{id}}" allowtransparency="true" allow="encrypted-media" id="song0"></iframe>
-                    </div>
+        {{#with track}}
+        <div class="col-2" id="4{{@index}}">
+            <div class="card border-success text-white" style="background-color: black">
+                <div class="card-header text-center">
+                    {{popularity}}
                 </div>
-            {{/with}}
+                <div class="card-body">
+                    <h5 class="card-title" id="Name">{{name}}</h5>
+                    <a class="btn btn-outline-success button-song" data-toggle="modal" data-target="#ModalCenter">Share</a>
+                    <input type="hidden" id="songid" value={{id}}>
+                </div>
+            </div>
+            <div class="embed-responsive embed-responsive-1by1 border border-success">
+                <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{id}}"
+                    allowtransparency="true" allow="encrypted-media" id="song0"></iframe>
+            </div>
+        </div>
+        {{/with}}
         {{/each}}
     </div>
     <div class="row top-buffer">
         {{#each twenThrough30}}
-            {{#with track}}
-                <div class="col-2" id="5{{@index}}">
-                    <div class="card border-success text-white" style="background-color: black">
-                        <div class="card-header text-center">
-                            {{popularity}}
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title" id="Name">{{name}}</h5>
-                            <a class="btn btn-outline-success button-song" data-toggle="modal" data-target="#ModalCenter">Share</a>
-                            <input type="hidden" id="songid" value={{id}}>
-                        </div>
-                    </div>
-                    <div class="embed-responsive embed-responsive-1by1 border border-success">
-                        <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{id}}" allowtransparency="true" allow="encrypted-media" id="song0"></iframe>
-                    </div>
+        {{#with track}}
+        <div class="col-2" id="5{{@index}}">
+            <div class="card border-success text-white" style="background-color: black">
+                <div class="card-header text-center">
+                    {{popularity}}
                 </div>
-            {{/with}}
+                <div class="card-body">
+                    <h5 class="card-title" id="Name">{{name}}</h5>
+                    <a class="btn btn-outline-success button-song" data-toggle="modal" data-target="#ModalCenter">Share</a>
+                    <input type="hidden" id="songid" value={{id}}>
+                </div>
+            </div>
+            <div class="embed-responsive embed-responsive-1by1 border border-success">
+                <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{id}}"
+                    allowtransparency="true" allow="encrypted-media" id="song0"></iframe>
+            </div>
+        </div>
+        {{/with}}
         {{/each}}
     </div>
     <div class="row top-buffer">
         {{#each thirtyoneThrough35}}
-            {{#with track}}
-                <div class="col-2" id="6{{@index}}">
-                    <div class="card border-success text-white" style="background-color: black">
-                        <div class="card-header text-center">
-                            {{popularity}}
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title" id="Name">{{name}}</h5>
-                            <a class="btn btn-outline-success button-song" data-toggle="modal" data-target="#ModalCenter">Share</a>
-                            <input type="hidden" id="songid" value={{id}}>
-                        </div>
-                    </div>
-                    <div class="embed-responsive embed-responsive-1by1 border border-success">
-                        <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{id}}" allowtransparency="true" allow="encrypted-media" id="song0"></iframe>
-                    </div>
+        {{#with track}}
+        <div class="col-2" id="6{{@index}}">
+            <div class="card border-success text-white" style="background-color: black">
+                <div class="card-header text-center">
+                    {{popularity}}
                 </div>
-            {{/with}}
+                <div class="card-body">
+                    <h5 class="card-title" id="Name">{{name}}</h5>
+                    <a class="btn btn-outline-success button-song" data-toggle="modal" data-target="#ModalCenter">Share</a>
+                    <input type="hidden" id="songid" value={{id}}>
+                </div>
+            </div>
+            <div class="embed-responsive embed-responsive-1by1 border border-success">
+                <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{id}}"
+                    allowtransparency="true" allow="encrypted-media" id="song0"></iframe>
+            </div>
+        </div>
+        {{/with}}
         {{/each}}
     </div>
     <div class="row top-buffer">
         {{#each thirtysixThrough40}}
-            {{#with track}}
-                <div class="col-2" id="7{{@index}}">
-                    <div class="card border-success text-white" style="background-color: black">
-                        <div class="card-header text-center">
-                            {{popularity}}
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title" id="Name">{{name}}</h5>
-                            <a class="btn btn-outline-success button-song" data-toggle="modal" data-target="#ModalCenter">Share</a>
-                            <input type="hidden" id="songid" value={{id}}>
-                        </div>
-                    </div>
-                    <div class="embed-responsive embed-responsive-1by1 border border-success">
-                        <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{id}}" allowtransparency="true" allow="encrypted-media" id="song0"></iframe>
-                    </div>
+        {{#with track}}
+        <div class="col-2" id="7{{@index}}">
+            <div class="card border-success text-white" style="background-color: black">
+                <div class="card-header text-center">
+                    {{popularity}}
                 </div>
-            {{/with}}
+                <div class="card-body">
+                    <h5 class="card-title" id="Name">{{name}}</h5>
+                    <a class="btn btn-outline-success button-song" data-toggle="modal" data-target="#ModalCenter">Share</a>
+                    <input type="hidden" id="songid" value={{id}}>
+                </div>
+            </div>
+            <div class="embed-responsive embed-responsive-1by1 border border-success">
+                <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{id}}"
+                    allowtransparency="true" allow="encrypted-media" id="song0"></iframe>
+            </div>
+        </div>
+        {{/with}}
         {{/each}}
     </div>
     <div class="row top-buffer">
         {{#each fortyoneThrough45}}
-            {{#with track}}
-                <div class="col-2" id="8{{@index}}">
-                    <div class="card border-success text-white" style="background-color: black">
-                        <div class="card-header text-center">
-                            {{popularity}}
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title" id="Name">{{name}}</h5>
-                            <a class="btn btn-outline-success button-song" data-toggle="modal" data-target="#ModalCenter">Share</a>
-                            <input type="hidden" id="songid" value={{id}}>
-                        </div>
-                    </div>
-                    <div class="embed-responsive embed-responsive-1by1 border border-success">
-                        <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{id}}" allowtransparency="true" allow="encrypted-media" id="song0"></iframe>
-                    </div>
+        {{#with track}}
+        <div class="col-2" id="8{{@index}}">
+            <div class="card border-success text-white" style="background-color: black">
+                <div class="card-header text-center">
+                    {{popularity}}
                 </div>
-            {{/with}}
+                <div class="card-body">
+                    <h5 class="card-title" id="Name">{{name}}</h5>
+                    <a class="btn btn-outline-success button-song" data-toggle="modal" data-target="#ModalCenter">Share</a>
+                    <input type="hidden" id="songid" value={{id}}>
+                </div>
+            </div>
+            <div class="embed-responsive embed-responsive-1by1 border border-success">
+                <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{id}}"
+                    allowtransparency="true" allow="encrypted-media" id="song0"></iframe>
+            </div>
+        </div>
+        {{/with}}
         {{/each}}
     </div>
     <div class="row top-buffer">
         {{#each fortysixThrough50}}
-            {{#with track}}
-                <div class="col-2" id="9{{@index}}">
-                    <div class="card border-success text-white" style="background-color: black">
-                        <div class="card-header text-center">
-                            {{popularity}}
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title" id="Name">{{name}}</h5>
-                            <input type="hidden" id="songid" value={{id}}>
-                            <a class="btn btn-outline-success button-song" data-toggle="modal" data-target="#ModalCenter">Share</a>
-                        </div>
-                    </div>
-                    <div class="embed-responsive embed-responsive-1by1 border border-success">
-                        <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{id}}" allowtransparency="true" allow="encrypted-media" id="song0"></iframe>
-                    </div>
+        {{#with track}}
+        <div class="col-2" id="9{{@index}}">
+            <div class="card border-success text-white" style="background-color: black">
+                <div class="card-header text-center">
+                    {{popularity}}
                 </div>
-            {{/with}}
+                <div class="card-body">
+                    <h5 class="card-title" id="Name">{{name}}</h5>
+                    <input type="hidden" id="songid" value={{id}}>
+                    <a class="btn btn-outline-success button-song" data-toggle="modal" data-target="#ModalCenter">Share</a>
+                </div>
+            </div>
+            <div class="embed-responsive embed-responsive-1by1 border border-success">
+                <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{id}}"
+                    allowtransparency="true" allow="encrypted-media" id="song0"></iframe>
+            </div>
+        </div>
+        {{/with}}
         {{/each}}
     </div>
     <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenter" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" >
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="SongName"></h5>
