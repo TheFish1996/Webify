@@ -10,9 +10,13 @@ const {
   UsViral50,
   getSpecificSong
 } = require("../routes/Spotify-Routes/spotifyRoutes");
-const { addSong, getAllSharedSongs, appendComment, getSpecificCategory } = require("../data/songsMongo");
-const { addUser, getUser, appendSharedSong} = require("../data/users");
-
+const {
+  addSong,
+  getAllSharedSongs,
+  appendComment,
+  getSpecificCategory
+} = require("../data/songsMongo");
+const { addUser, getUser, appendSharedSong } = require("../data/users");
 
 const client_id = "0edee0583a08407fa148378bb88dcf68"; // Your client id thats provided form our application
 const client_secret = "7807b53ecdff4da3a2325ce589b798d2"; // Your secret id thats provided form our application
@@ -48,10 +52,10 @@ router.get("/songs", async function(req, res) {
   //songs path
   let access_token = req.query.access_token; //pulls access token from header. If possible maybe make the access token a cookie?
   let data = await getUserInfo(access_token); //this will return a promise passing in the options object and returning the resulting data
-  let GlobalTop50Data = await getSpecificCategory("GlobalTop50")  //queries database specifically for posts by category
-  let GlobalViral50Data = await getSpecificCategory("GlobalViral50") //queries database specifically for posts by category
-  let USViral50Data = await getSpecificCategory("UnitedStatesViral50") //queries database specifically for posts by category
-  let USTop50Data = await getSpecificCategory("UsTop50")
+  let GlobalTop50Data = await getSpecificCategory("GlobalTop50"); //queries database specifically for posts by category
+  let GlobalViral50Data = await getSpecificCategory("GlobalViral50"); //queries database specifically for posts by category
+  let USViral50Data = await getSpecificCategory("UnitedStatesViral50"); //queries database specifically for posts by category
+  let USTop50Data = await getSpecificCategory("UsTop50");
 
   let AllSharedSongs = await getAllSharedSongs();
   let profilePicture = "/public/img/no-profile-picture-icon.jpg"; //if the image array is zero that means there is no image and should default to this
@@ -61,16 +65,13 @@ router.get("/songs", async function(req, res) {
   }
 
   //find user by id
-  const foundUser = await getUser(data.display_name)
-  if(foundUser){
-    recentlySharedSong = foundUser.shared_tracks[foundUser.shared_tracks.length - 1] //getting recently shared song
+  const foundUser = await getUser(data.display_name);
+  if (foundUser) {
+    recentlySharedSong =
+      foundUser.shared_tracks[foundUser.shared_tracks.length - 1]; //getting recently shared song
+  } else {
+    const newUser = await addUser(data.display_name);
   }
-  else{
-    const newUser = await addUser(data.display_name)
-
-  }
-  
-
 
   res.render("authentication/songs", {
     profilePicture: profilePicture,
@@ -117,6 +118,8 @@ router.get("/UsTop50", async (req, res) => {
       Selected_Category: "UsTop50",
       User: user_Info.display_name
     });
+  } else {
+    res.redirect("/");
   }
 });
 router.get("/GlobalTop50", async (req, res) => {
@@ -151,6 +154,7 @@ router.get("/GlobalTop50", async (req, res) => {
       User: user_Info.display_name
     });
   } else {
+    res.redirect("/");
   }
 });
 router.get("/GlobalViral50", async (req, res) => {
@@ -184,6 +188,7 @@ router.get("/GlobalViral50", async (req, res) => {
       User: user_Info.display_name
     });
   } else {
+    res.redirect("/");
   }
 });
 
@@ -219,6 +224,7 @@ router.get("/UnitedStatesViral50", async (req, res) => {
       User: user_Info.display_name
     });
   } else {
+    res.redirect("/");
   }
 });
 
@@ -242,22 +248,33 @@ router.post("/songs", async (req, res) => {
         profilePicture = user_Info.images[0].url;
 
       //Song data pulled from spotify
-      const CorrectAPIData = await getSpecificSong(access_token, songReferenceID);
+      const CorrectAPIData = await getSpecificSong(
+        access_token,
+        songReferenceID
+      );
       const Artist_Name = CorrectAPIData.album.artists[0].name;
       const Album_Cover = CorrectAPIData.album.images[0].url;
       const Song_Name = CorrectAPIData.name;
       const Stream_url = `https://open.spotify.com/embed/track/${songReferenceID}`;
 
-      await appendSharedSong(UserThatSubmitted, Song_Name)
-
+      await appendSharedSong(UserThatSubmitted, Song_Name);
 
       //add the song
-      const sharedSong = await addSong(UserThatSubmitted, profilePicture, Users_comment, Submitted_category, Artist_Name, Song_Name, Album_Cover, Stream_url); //adding all data to database
+      const sharedSong = await addSong(
+        UserThatSubmitted,
+        profilePicture,
+        Users_comment,
+        Submitted_category,
+        Artist_Name,
+        Song_Name,
+        Album_Cover,
+        Stream_url
+      ); //adding all data to database
       res.send(sharedSong);
     } catch (error) {
       throw ("Something went wrong: ", error);
     }
-  } 
+  }
 });
 
 //append a comment? dont know yet will figure out next
@@ -265,14 +282,17 @@ router.post("/songs/comments", async (req, res) => {
   const access_token = req.headers.cookie;
   const data = req.body;
   if (access_token) {
-    let ReferenceIDDatabase = req.body.dataBaseID;  //database reference id
-    let UserPostingNewComment = req.body.UserPostingNewComment  //User appending to comments
-    let commentText = req.body.newlyAddedComment     //comment word 
-    
-    let appendedComment = await appendComment(ReferenceIDDatabase, UserPostingNewComment,commentText)
-    res.send(appendedComment)
+    let ReferenceIDDatabase = req.body.dataBaseID; //database reference id
+    let UserPostingNewComment = req.body.UserPostingNewComment; //User appending to comments
+    let commentText = req.body.newlyAddedComment; //comment word
 
-  } 
+    let appendedComment = await appendComment(
+      ReferenceIDDatabase,
+      UserPostingNewComment,
+      commentText
+    );
+    res.send(appendedComment);
+  }
 });
 
 /******************************************************************************************************************
