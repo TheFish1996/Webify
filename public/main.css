@@ -114,7 +114,7 @@ Logged in Page styling
 }
 
 .margin-down {
-    padding-top: 50px;
+    padding-top: 20px;
 }
 
 .dropdown-menu a {
@@ -190,6 +190,10 @@ u {
 
 #addingNewComment{
     padding-top: 15px;
+}
+
+#RegularCategory:hover, #UsTop50Category:hover, #GlobalTop50Category:hover, #GlobalViral50Category:hover,  #UsViral50Category:hover {
+    background-color: black;
 }
 
 

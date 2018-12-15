@@ -16,6 +16,12 @@ const checker = phrase => {                         //checks if a comment was ev
 
 
 (function($) {
+
+  $(".USTop50SongFeed").attr('style','display: none');
+  $(".GlobaTop50SongFeed").attr('style','display: none');
+  $(".GlobaViral50SongFeed").attr('style','display: none');
+  $(".USViral50SongFeed").attr('style','display: none');
+
   $(".user-added-comment").click(function(event) {
     event.preventDefault();
     let classes = $(this).parents();
@@ -23,6 +29,7 @@ const checker = phrase => {                         //checks if a comment was ev
       .text()
       .slice(5);
     let buttonParentID = classes[4].id; //finds the id of the parent class where button was clicked
+    console.log(buttonParentID)
     let findDatabaseId = $(`#${buttonParentID}`)
       .find("input#id_placeholder")
       .val(); //gets database reference id
@@ -75,6 +82,48 @@ const checker = phrase => {                         //checks if a comment was ev
     }
 
   });
+
+  $("#UsTop50Category").click(function(event) {
+      $(".GlobaTop50SongFeed").attr('style','display: none');
+      $(".GlobaViral50SongFeed").attr('style','display: none');
+      $(".USViral50SongFeed").attr('style','display: none');
+      $(".RegularSongFeed").attr('style','display: none');
+      $(".USTop50SongFeed").removeAttr("style");
+     });
+
+  $("#GlobalTop50Category").click(function(event) {
+      $(".GlobaTop50SongFeed").removeAttr("style");
+      $(".GlobaViral50SongFeed").attr('style','display: none');
+      $(".USViral50SongFeed").attr('style','display: none');
+      $(".RegularSongFeed").attr('style','display: none');
+      $(".USTop50SongFeed").attr('style','display: none');
+     });
+
+  $("#GlobalViral50Category").click(function(event) {
+      $(".GlobaTop50SongFeed").attr('style','display: none');
+      $(".GlobaViral50SongFeed").removeAttr("style");
+      $(".USViral50SongFeed").attr('style','display: none');
+      $(".RegularSongFeed").attr('style','display: none');
+      $(".USTop50SongFeed").attr('style','display: none');
+     });
+
+  $("#UsViral50Category").click(function(event) {
+      $(".GlobaTop50SongFeed").attr('style','display: none');
+      $(".GlobaViral50SongFeed").attr('style','display: none');
+      $(".USViral50SongFeed").removeAttr("style");
+      $(".RegularSongFeed").attr('style','display: none');
+      $(".USTop50SongFeed").attr('style','display: none');
+     });
+
+  $("#RegularCategory").click(function(event) {
+      $(".GlobaTop50SongFeed").attr('style','display: none');
+      $(".GlobaViral50SongFeed").attr('style','display: none');
+      $(".USViral50SongFeed").attr('style','display: none');
+      $(".RegularSongFeed").removeAttr("style");
+      $(".USTop50SongFeed").attr('style','display: none');
+     });
+
+
 
   // $(".user-added-comment").click(function() {
   //   console.log("yes this works")

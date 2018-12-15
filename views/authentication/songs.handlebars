@@ -42,10 +42,19 @@
         <div class="col-8">
             <div class="container margin-down">
                 <div class="row">
-                    <p>testing to seeeeee</p>
+                    <div class="dropdown">
+                        <a class="btn btn-success text-white dropdown-toggle" id="categoryBrowser" role="button" data-toggle="dropdown">View by Category</a>
+                        <div class="dropdown-menu" data-target="#categoryBrowser" id="header-logged-container">
+                            <a class="dropdown-item text-white" id="RegularCategory">Regular</a>
+                            <a class="dropdown-item text-white" id="UsTop50Category">Us Top 50</a>
+                            <a class="dropdown-item text-white" id="GlobalTop50Category">Global Top 50</a>
+                            <a class="dropdown-item text-white" id="GlobalViral50Category">Global Viral 50</a>
+                            <a class="dropdown-item text-white" id="UsViral50Category">United States Viral 50</a>
+                        </div>
+                    </div>
                 </div>
                 {{#each commentData}}
-                <div class="row border border-success user-comment" id="comment{{@index}}">
+                <div class="row border border-success user-comment RegularSongFeed" id="comment{{@index}}">
                     <input type="hidden" name="uniqueCommentid" value={{_id}} id="id_placeholder">
                     <div class="col-2 top-padding">
                         <img src={{User_profile_picture}} height="85" width="85" class="rounded-circle">
@@ -59,6 +68,218 @@
                         <a class="btn btn-success text-white comments-padding find-all-comments" data-toggle="modal" data-target="#ModalTop{{@index}}">View Comments</a>
                     </div>
                     <div class="modal fade" id="ModalTop{{@index}}" tabindex="-1" role="dialog" aria-labelledby="ModalTop" aria-hidden="true">
+                        <div class="modal-dialog" role="document" >
+                            <div class="modal-content content-style">
+                                <div class="modal-header view-comments-title">
+                                    <h4 class="text-white modal-title">Comments</h4>
+                                </div>
+                                <div class="modal-body" style="background-color: black">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <p class="text-white">Album art goes here</p>
+                                        </div>
+                                        {{#each Comments}}
+                                        <div class="row row-testing">
+                                            <div class="col-2">
+                                                <p class="text-white">{{UserID}}</p>
+                                            </div>
+                                            <div class="col">
+                                                <p class="text-white">{{Text}}</p>
+                                            </div>
+                                        </div>
+                                        {{/each}}
+                                        <div clas="row">
+                                            <form id="addingNewComment">
+                                                <div class="form-group">
+                                                    <input type="text" id="newlyMadeComment" name="newlyAddedComment" placeholder="Enter a new comment" size="40">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>      
+                                </div>
+                                <div class="modal-footer modal-body-style" style="background-color: black">
+                                    <button type="submit" class="btn btn-outline-success text-white user-added-comment">Add Comment!</button>
+                                    <button type="button" class="btn btn-outline-success text-white" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+                {{/each}}
+                {{#each USTop50Data}}
+                <div class="row border border-success user-comment USTop50SongFeed" id="comment1{{@index}}">
+                    <input type="hidden" name="uniqueCommentid" value={{_id}} id="id_placeholder">
+                    <div class="col-2 top-padding">
+                        <img src={{User_profile_picture}} height="85" width="85" class="rounded-circle">
+                    </div>
+                    <div class="col-lg-9 col-sm-6 top-padding">
+                        <h5 style="color: white">{{User}}</h5>
+                        <p style="color: white">{{Shared_Commment}}</p>
+                        <p style="color: white"><u>Category:</u>{{Category}}</p>
+                        <iframe src={{Stream_url}} width="450" height="75" frameborder="0" allowtransparency="true"
+                            allow="encrypted-media" id="song0"></iframe>
+                        <a class="btn btn-success text-white comments-padding find-all-comments" data-toggle="modal" data-target="#ModalTop1{{@index}}">View Comments</a>
+                    </div>
+                    <div class="modal fade" id="ModalTop1{{@index}}" tabindex="-1" role="dialog" aria-labelledby="ModalTop" aria-hidden="true">
+                        <div class="modal-dialog" role="document" >
+                            <div class="modal-content content-style">
+                                <div class="modal-header view-comments-title">
+                                    <h4 class="text-white modal-title">Comments</h4>
+                                </div>
+                                <div class="modal-body" style="background-color: black">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <p class="text-white">Album art goes here</p>
+                                        </div>
+                                        {{#each Comments}}
+                                        <div class="row row-testing">
+                                            <div class="col-2">
+                                                <p class="text-white">{{UserID}}</p>
+                                            </div>
+                                            <div class="col">
+                                                <p class="text-white">{{Text}}</p>
+                                            </div>
+                                        </div>
+                                        {{/each}}
+                                        <div clas="row">
+                                            <form id="addingNewComment">
+                                                <div class="form-group">
+                                                    <input type="text" id="newlyMadeComment" name="newlyAddedComment" placeholder="Enter a new comment" size="40">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>      
+                                </div>
+                                <div class="modal-footer modal-body-style" style="background-color: black">
+                                    <button type="submit" class="btn btn-outline-success text-white user-added-comment">Add Comment!</button>
+                                    <button type="button" class="btn btn-outline-success text-white" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+                {{/each}}
+                {{#each GlobalTop50Data}}
+                <div class="row border border-success user-comment GlobaTop50SongFeed" id="comment2{{@index}}">
+                    <input type="hidden" name="uniqueCommentid" value={{_id}} id="id_placeholder">
+                    <div class="col-2 top-padding">
+                        <img src={{User_profile_picture}} height="85" width="85" class="rounded-circle">
+                    </div>
+                    <div class="col-lg-9 col-sm-6 top-padding">
+                        <h5 style="color: white">{{User}}</h5>
+                        <p style="color: white">{{Shared_Commment}}</p>
+                        <p style="color: white"><u>Category:</u>{{Category}}</p>
+                        <iframe src={{Stream_url}} width="450" height="75" frameborder="0" allowtransparency="true"
+                            allow="encrypted-media" id="song0"></iframe>
+                        <a class="btn btn-success text-white comments-padding find-all-comments" data-toggle="modal" data-target="#ModalTop2{{@index}}">View Comments</a>
+                    </div>
+                    <div class="modal fade" id="ModalTop2{{@index}}" tabindex="-1" role="dialog" aria-labelledby="ModalTop" aria-hidden="true">
+                        <div class="modal-dialog" role="document" >
+                            <div class="modal-content content-style">
+                                <div class="modal-header view-comments-title">
+                                    <h4 class="text-white modal-title">Comments</h4>
+                                </div>
+                                <div class="modal-body" style="background-color: black">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <p class="text-white">Album art goes here</p>
+                                        </div>
+                                        {{#each Comments}}
+                                        <div class="row row-testing">
+                                            <div class="col-2">
+                                                <p class="text-white">{{UserID}}</p>
+                                            </div>
+                                            <div class="col">
+                                                <p class="text-white">{{Text}}</p>
+                                            </div>
+                                        </div>
+                                        {{/each}}
+                                        <div clas="row">
+                                            <form id="addingNewComment">
+                                                <div class="form-group">
+                                                    <input type="text" id="newlyMadeComment" name="newlyAddedComment" placeholder="Enter a new comment" size="40">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>      
+                                </div>
+                                <div class="modal-footer modal-body-style" style="background-color: black">
+                                    <button type="submit" class="btn btn-outline-success text-white user-added-comment">Add Comment!</button>
+                                    <button type="button" class="btn btn-outline-success text-white" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+                {{/each}}
+                {{#each GlobalViral50Data}}
+                <div class="row border border-success user-comment GlobaViral50SongFeed" id="comment3{{@index}}">
+                    <input type="hidden" name="uniqueCommentid" value={{_id}} id="id_placeholder">
+                    <div class="col-2 top-padding">
+                        <img src={{User_profile_picture}} height="85" width="85" class="rounded-circle">
+                    </div>
+                    <div class="col-lg-9 col-sm-6 top-padding">
+                        <h5 style="color: white">{{User}}</h5>
+                        <p style="color: white">{{Shared_Commment}}</p>
+                        <p style="color: white"><u>Category:</u>{{Category}}</p>
+                        <iframe src={{Stream_url}} width="450" height="75" frameborder="0" allowtransparency="true"
+                            allow="encrypted-media" id="song0"></iframe>
+                        <a class="btn btn-success text-white comments-padding find-all-comments" data-toggle="modal" data-target="#ModalTop3{{@index}}">View Comments</a>
+                    </div>
+                    <div class="modal fade" id="ModalTop3{{@index}}" tabindex="-1" role="dialog" aria-labelledby="ModalTop" aria-hidden="true">
+                        <div class="modal-dialog" role="document" >
+                            <div class="modal-content content-style">
+                                <div class="modal-header view-comments-title">
+                                    <h4 class="text-white modal-title">Comments</h4>
+                                </div>
+                                <div class="modal-body" style="background-color: black">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <p class="text-white">Album art goes here</p>
+                                        </div>
+                                        {{#each Comments}}
+                                        <div class="row row-testing">
+                                            <div class="col-2">
+                                                <p class="text-white">{{UserID}}</p>
+                                            </div>
+                                            <div class="col">
+                                                <p class="text-white">{{Text}}</p>
+                                            </div>
+                                        </div>
+                                        {{/each}}
+                                        <div clas="row">
+                                            <form id="addingNewComment">
+                                                <div class="form-group">
+                                                    <input type="text" id="newlyMadeComment" name="newlyAddedComment" placeholder="Enter a new comment" size="40">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>      
+                                </div>
+                                <div class="modal-footer modal-body-style" style="background-color: black">
+                                    <button type="submit" class="btn btn-outline-success text-white user-added-comment">Add Comment!</button>
+                                    <button type="button" class="btn btn-outline-success text-white" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+                {{/each}}
+                {{#each USViral50Data}}
+                <div class="row border border-success user-comment USViral50SongFeed" id="comment4{{@index}}">
+                    <input type="hidden" name="uniqueCommentid" value={{_id}} id="id_placeholder">
+                    <div class="col-2 top-padding">
+                        <img src={{User_profile_picture}} height="85" width="85" class="rounded-circle">
+                    </div>
+                    <div class="col-lg-9 col-sm-6 top-padding">
+                        <h5 style="color: white">{{User}}</h5>
+                        <p style="color: white">{{Shared_Commment}}</p>
+                        <p style="color: white"><u>Category:</u>{{Category}}</p>
+                        <iframe src={{Stream_url}} width="450" height="75" frameborder="0" allowtransparency="true"
+                            allow="encrypted-media" id="song0"></iframe>
+                        <a class="btn btn-success text-white comments-padding find-all-comments" data-toggle="modal" data-target="#ModalTop4{{@index}}">View Comments</a>
+                    </div>
+                    <div class="modal fade" id="ModalTop4{{@index}}" tabindex="-1" role="dialog" aria-labelledby="ModalTop" aria-hidden="true">
                         <div class="modal-dialog" role="document" >
                             <div class="modal-content content-style">
                                 <div class="modal-header view-comments-title">

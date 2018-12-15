@@ -79,9 +79,21 @@ async function returnSong(id) {
   return foundSong; //return said cue
 }
 
+const getSpecificCategory = async (categoryProvided) => {
+
+  const songCollection = await SharedSongs();
+  const foundSongs = await songCollection.find({Category : categoryProvided }).toArray(); //mongo query to get the cue
+  if (foundSongs === null) throw "could not find that cue"; //throw an err
+  return foundSongs; //return said cue
+
+}
+
+
+
 module.exports = {
   addSong,
   getAllSharedSongs,
   returnSong,
-  appendComment
+  appendComment,
+  getSpecificCategory
 };

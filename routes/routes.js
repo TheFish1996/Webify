@@ -12,7 +12,7 @@ const {
 } = require("../routes/Spotify-Routes/spotifyRoutes");
 const TestingCollection = require("../mockData");
 const AlldataCollections = require("../data");
-const { addSong, getAllSharedSongs, appendComment } = require("../data/songsMongo");
+const { addSong, getAllSharedSongs, appendComment, getSpecificCategory } = require("../data/songsMongo");
 const { addUser, getUser, appendSharedSong} = require("../data/users");
 
 
@@ -50,6 +50,11 @@ router.get("/songs", async function(req, res) {
   //songs path
   let access_token = req.query.access_token; //pulls access token from header. If possible maybe make the access token a cookie?
   let data = await getUserInfo(access_token); //this will return a promise passing in the options object and returning the resulting data
+  let GlobalTop50Data = await getSpecificCategory("GlobalTop50")  //queries database specifically for posts by category
+  let GlobalViral50Data = await getSpecificCategory("GlobalViral50") //queries database specifically for posts by category
+  let USViral50Data = await getSpecificCategory("UnitedStatesViral50") //queries database specifically for posts by category
+  let USTop50Data = await getSpecificCategory("UsTop50")
+
   let AllSharedSongs = await getAllSharedSongs();
   let profilePicture = "/public/img/no-profile-picture-icon.jpg"; //if the image array is zero that means there is no image and should default to this
   let recentlySharedSong = "";
@@ -84,7 +89,11 @@ router.get("/songs", async function(req, res) {
     followers: data.followers.total,
     WebName: data.display_name,
     recentlySharedSong: recentlySharedSong,
-    commentData: AllSharedSongs
+    commentData: AllSharedSongs,
+    USTop50Data: USTop50Data,
+    GlobalTop50Data: GlobalTop50Data,
+    GlobalViral50Data: GlobalViral50Data,
+    USViral50Data: USViral50Data
   });
 });
 
