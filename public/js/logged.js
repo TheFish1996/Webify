@@ -7,6 +7,14 @@ function getToken() {
   return token;
 }
 
+const checker = phrase => {                         //checks if a comment was even provided or not
+  if(!phrase) return false;
+  if (!phrase.replace(/\s/g, '').length) return false;
+  return true;
+}
+
+
+
 (function($) {
   $(".user-added-comment").click(function(event) {
     event.preventDefault();
@@ -24,9 +32,17 @@ function getToken() {
       .serializeArray();
     let newlyAddedComment = formData[0].value; //gets new comment posated by user
 
+    let validComment = checker(newlyAddedComment)
+
     // console.log(findDatabaseId)
     // console.log(UserPostingNewComment)
     //  console.log(newlyAddedComment)
+
+    if(validComment){
+
+      $("#newlyMadeComment").css({"border-color": "transparent", 
+             "border-width":"3px", 
+             "border-style":"solid"});
 
     $.ajax({
       type: "Post",
@@ -47,6 +63,17 @@ function getToken() {
         console.log("Error hitting the post route for comments");
       }
     });
+
+    } else {
+
+      console.log("Valid comment wasnt provided")
+      $("#newlyMadeComment").css({"border-color": "#FF0000", 
+             "border-width":"3px", 
+             "border-style":"solid"});
+
+      $("input#newlyMadeComment").attr("placeholder", "Comment Was not provided")
+    }
+
   });
 
   // $(".user-added-comment").click(function() {

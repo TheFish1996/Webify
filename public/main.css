@@ -177,6 +177,22 @@ u {
     border-image-slice: 1;
 }
 
+.row-testing {
+    border: 1px solid transparent;
+    border-image: linear-gradient(to right, #087508, #000000);
+    border-image-slice: 1;
+    padding-top: 10px;
+}
+
+.row-testing:hover{
+    background-color: #28a745;
+}
+
+#addingNewComment{
+    padding-top: 15px;
+}
+
+
 
 /*
 ==============================================

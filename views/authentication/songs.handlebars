@@ -61,14 +61,20 @@
                                     <h4 class="text-white modal-title">Comments</h4>
                                 </div>
                                 <div class="modal-body" style="background-color: black">
-                                    {{#each Comments}}
                                     <div class="container-fluid">
                                         <div class="row">
-                                            <p>{{UserID}}</p>
+                                            <p class="text-white">Album art goes here</p>
                                         </div>
-                                        <div class="row">
-                                            <p>{{Text}}</p>
+                                        {{#each Comments}}
+                                        <div class="row row-testing">
+                                            <div class="col-2">
+                                                <p class="text-white">{{UserID}}</p>
+                                            </div>
+                                            <div class="col">
+                                                <p class="text-white">{{Text}}</p>
+                                            </div>
                                         </div>
+                                        {{/each}}
                                         <div clas="row">
                                             <form id="addingNewComment">
                                                 <div class="form-group">
@@ -76,8 +82,7 @@
                                                 </div>
                                             </form>
                                         </div>
-                                    </div>
-                                    {{/each}}        
+                                    </div>      
                                 </div>
                                 <div class="modal-footer modal-body-style" style="background-color: black">
                                     <button type="submit" class="btn btn-outline-success text-white user-added-comment">Add Comment!</button>
