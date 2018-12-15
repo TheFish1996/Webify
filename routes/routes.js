@@ -13,7 +13,7 @@ const {
 const TestingCollection = require("../mockData");
 const AlldataCollections = require("../data");
 const { addSong, getAllSharedSongs, appendComment } = require("../data/songsMongo");
-const { addUser, getUser} = require("../data/users");
+const { addUser, getUser, appendSharedSong} = require("../data/users");
 
 
 const client_id = "0edee0583a08407fa148378bb88dcf68"; // Your client id thats provided form our application
@@ -52,6 +52,7 @@ router.get("/songs", async function(req, res) {
   let data = await getUserInfo(access_token); //this will return a promise passing in the options object and returning the resulting data
   let AllSharedSongs = await getAllSharedSongs();
   let profilePicture = "/public/img/no-profile-picture-icon.jpg"; //if the image array is zero that means there is no image and should default to this
+  let recentlySharedSong = "";
   if (data.images.length === 1) {
     profilePicture = data.images[0].url;
   }
@@ -60,6 +61,9 @@ router.get("/songs", async function(req, res) {
   const foundUser = await getUser(data.display_name)
   if(foundUser){
     console.log("user found")
+    recentlySharedSong = foundUser.shared_tracks[foundUser.shared_tracks.length - 1] //getting recently shared song
+    //console.log(recentlySharedSong)
+    //myArray[myArray.length - 1];
   }
   else{
     console.log("adding a new user..")
@@ -69,16 +73,17 @@ router.get("/songs", async function(req, res) {
   }
   
 
-  if(data.display_name){
-    //find user by username
+  // if(data.display_name){
+  //   //find user by username
     
-  }
+  // }
 
   res.render("authentication/songs", {
     profilePicture: profilePicture,
     Name: data.display_name,
     followers: data.followers.total,
     WebName: data.display_name,
+    recentlySharedSong: recentlySharedSong,
     commentData: AllSharedSongs
   });
 });
@@ -254,6 +259,8 @@ router.post("/songs", async (req, res) => {
       const Album_Cover = CorrectAPIData.album.images[0].url;
       const Song_Name = CorrectAPIData.name;
       const Stream_url = `https://open.spotify.com/embed/track/${songReferenceID}`;
+
+      await appendSharedSong(UserThatSubmitted, Song_Name)
 
 
       //add the song

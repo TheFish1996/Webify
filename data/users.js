@@ -7,7 +7,7 @@ const addUser = async userName => {
 
   let userObject = {
     _id: userName,
-    shared_tracks: [{}]
+    shared_tracks: []
   };
 
   const userCollection = await userData();
@@ -29,7 +29,26 @@ const getUser = async name => {
   return findUser;
 };
 
+const appendSharedSong = async (name, sharedSong) => {
+  if (!name) throw "No id was provided";
+  const userInformation = await getUser(name)
+  const userCollection = await userData();
+  const updatedList = userInformation.shared_tracks.push(sharedSong)
+
+  console.log(userInformation)
+
+  const updatedSharedSongs = await userCollection.updateOne(
+    { _id: name },
+    { $set: userInformation }
+    );
+    if (updatedSharedSongs.insertedCount === 0) console.log("Could not update the cue");
+  //throw an err
+  else if (updatedSharedSongs.modifiedCount === 1) return userInformation; //return the cue
+}
+
+
 module.exports = {
   addUser,
-  getUser
+  getUser,
+  appendSharedSong
 };
