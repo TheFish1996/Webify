@@ -17,10 +17,10 @@ const checker = phrase => {                         //checks if a comment was ev
 
 (function($) {
 
-  $(".USTop50SongFeed").attr('style','display: none');
-  $(".GlobaTop50SongFeed").attr('style','display: none');
-  $(".GlobaViral50SongFeed").attr('style','display: none');
-  $(".USViral50SongFeed").attr('style','display: none');
+  $(".USTop50SongFeed").attr('style','display: none');      //when page loads in the regular state, it hides all other categories data excep main feed
+  $(".GlobaTop50SongFeed").attr('style','display: none');   //when page loads in the regular state, it hides all other categories data excep main feed
+  $(".GlobaViral50SongFeed").attr('style','display: none');  //when page loads in the regular state, it hides all other categories data excep main feed
+  $(".USViral50SongFeed").attr('style','display: none');  //when page loads in the regular state, it hides all other categories data excep main feed
 
   $(".user-added-comment").click(function(event) {
     event.preventDefault();
@@ -83,7 +83,7 @@ const checker = phrase => {                         //checks if a comment was ev
 
   });
 
-  $("#UsTop50Category").click(function(event) {
+  $("#UsTop50Category").click(function(event) {           //upon click of category it hides all other content and only displays USTop50 data
       $(".GlobaTop50SongFeed").attr('style','display: none');
       $(".GlobaViral50SongFeed").attr('style','display: none');
       $(".USViral50SongFeed").attr('style','display: none');
@@ -91,7 +91,7 @@ const checker = phrase => {                         //checks if a comment was ev
       $(".USTop50SongFeed").removeAttr("style");
      });
 
-  $("#GlobalTop50Category").click(function(event) {
+  $("#GlobalTop50Category").click(function(event) {  //upon click of category it hides all other content and only displays GlobalTop50 data
       $(".GlobaTop50SongFeed").removeAttr("style");
       $(".GlobaViral50SongFeed").attr('style','display: none');
       $(".USViral50SongFeed").attr('style','display: none');
@@ -99,7 +99,7 @@ const checker = phrase => {                         //checks if a comment was ev
       $(".USTop50SongFeed").attr('style','display: none');
      });
 
-  $("#GlobalViral50Category").click(function(event) {
+  $("#GlobalViral50Category").click(function(event) {        //upon click of category it hides all other content and only displays GlobalViral50 data
       $(".GlobaTop50SongFeed").attr('style','display: none');
       $(".GlobaViral50SongFeed").removeAttr("style");
       $(".USViral50SongFeed").attr('style','display: none');
@@ -107,7 +107,7 @@ const checker = phrase => {                         //checks if a comment was ev
       $(".USTop50SongFeed").attr('style','display: none');
      });
 
-  $("#UsViral50Category").click(function(event) {
+  $("#UsViral50Category").click(function(event) {                   //upon click of category it hides all other content and only displays USViral50 data
       $(".GlobaTop50SongFeed").attr('style','display: none');
       $(".GlobaViral50SongFeed").attr('style','display: none');
       $(".USViral50SongFeed").removeAttr("style");
@@ -115,7 +115,7 @@ const checker = phrase => {                         //checks if a comment was ev
       $(".USTop50SongFeed").attr('style','display: none');
      });
 
-  $("#RegularCategory").click(function(event) {
+  $("#RegularCategory").click(function(event) {                      //upon click of category it hides all other content and only displays Whole song feed data
       $(".GlobaTop50SongFeed").attr('style','display: none');
       $(".GlobaViral50SongFeed").attr('style','display: none');
       $(".USViral50SongFeed").attr('style','display: none');
