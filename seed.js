@@ -19,7 +19,7 @@ const seedData = [
   },
   {
     _id: uuid(),
-    User: "eaki_smalls",
+    User: "jojobro96",
     User_profile_picture: "/public/img/no-profile-picture-icon.jpg",
     Shared_Commment: "eeesss J BALVINN",
     Category: "GlobalViral50",
@@ -38,7 +38,7 @@ const seedData = [
   },
   {
     _id: uuid(),
-    User: "eaki_smalls",
+    User: "jojobro96",
     User_profile_picture: "/public/img/no-profile-picture-icon.jpg",
     Shared_Commment: "....taki, taki..ROOMBA!!",
     Category: "GlobalTop50",
@@ -76,7 +76,7 @@ const seedData = [
   },
   {
     _id: uuid(),
-    User: "eaki_smalls",
+    User: "jojobro96",
     User_profile_picture: "/public/img/no-profile-picture-icon.jpg",
     Shared_Commment: "....taki, taki..ROOMBA!!",
     Category: "GlobalTop50",
@@ -129,9 +129,8 @@ async function seedDataBase(data) {
   const insertSharedSong = await songCollection.insertMany(data);
 }
 
-
-async function main(){
-    await seedDataBase(seedData);
-
+async function main() {
+  let seeded = await seedDataBase(seedData);
+  console.log("done..");
 }
 main();
