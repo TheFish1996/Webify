@@ -10,8 +10,6 @@ const {
   UsViral50,
   getSpecificSong
 } = require("../routes/Spotify-Routes/spotifyRoutes");
-const TestingCollection = require("../mockData");
-const AlldataCollections = require("../data");
 const { addSong, getAllSharedSongs, appendComment, getSpecificCategory } = require("../data/songsMongo");
 const { addUser, getUser, appendSharedSong} = require("../data/users");
 
@@ -65,23 +63,14 @@ router.get("/songs", async function(req, res) {
   //find user by id
   const foundUser = await getUser(data.display_name)
   if(foundUser){
-    console.log("user found")
     recentlySharedSong = foundUser.shared_tracks[foundUser.shared_tracks.length - 1] //getting recently shared song
-    //console.log(recentlySharedSong)
-    //myArray[myArray.length - 1];
   }
   else{
-    console.log("adding a new user..")
     const newUser = await addUser(data.display_name)
-    console.log(newUser)
 
   }
   
 
-  // if(data.display_name){
-  //   //find user by username
-    
-  // }
 
   res.render("authentication/songs", {
     profilePicture: profilePicture,
@@ -114,7 +103,6 @@ router.get("/UsTop50", async (req, res) => {
     let fortyoneThrough45 = data.slice(40, 45);
     let fortysixThrough50 = data.slice(45, 50);
 
-    console.log("u have an access token");
     res.render("authentication/AllPlaylists", {
       first5Songs: first5Songs,
       sixthrough10: sixThrough10,
@@ -129,8 +117,6 @@ router.get("/UsTop50", async (req, res) => {
       Selected_Category: "UsTop50",
       User: user_Info.display_name
     });
-  } else {
-    console.log("u dont have an access token");
   }
 });
 router.get("/GlobalTop50", async (req, res) => {
@@ -150,7 +136,6 @@ router.get("/GlobalTop50", async (req, res) => {
     let fortyoneThrough45 = data.slice(40, 45);
     let fortysixThrough50 = data.slice(45, 50);
 
-    console.log("u have an access token");
     res.render("authentication/AllPlaylists", {
       first5Songs: first5Songs,
       sixthrough10: sixThrough10,
@@ -166,7 +151,6 @@ router.get("/GlobalTop50", async (req, res) => {
       User: user_Info.display_name
     });
   } else {
-    console.log("u dont have an access token");
   }
 });
 router.get("/GlobalViral50", async (req, res) => {
@@ -174,7 +158,6 @@ router.get("/GlobalViral50", async (req, res) => {
   if (access_token) {
     let data = await GlobalViral50(access_token);
     let user_Info = await getUserInfo(access_token);
-
     let first5Songs = data.slice(0, 5);
     let sixThrough10 = data.slice(5, 10);
     let elThrough15 = data.slice(10, 15);
@@ -186,7 +169,6 @@ router.get("/GlobalViral50", async (req, res) => {
     let fortyoneThrough45 = data.slice(40, 45);
     let fortysixThrough50 = data.slice(45, 50);
 
-    console.log("u have an access token");
     res.render("authentication/AllPlaylists", {
       first5Songs: first5Songs,
       sixthrough10: sixThrough10,
@@ -202,7 +184,6 @@ router.get("/GlobalViral50", async (req, res) => {
       User: user_Info.display_name
     });
   } else {
-    console.log("u dont have an access token");
   }
 });
 
@@ -223,7 +204,6 @@ router.get("/UnitedStatesViral50", async (req, res) => {
     let fortyoneThrough45 = data.slice(40, 45);
     let fortysixThrough50 = data.slice(45, 50);
 
-    console.log("u have an access token");
     res.render("authentication/AllPlaylists", {
       first5Songs: first5Songs,
       sixthrough10: sixThrough10,
@@ -239,7 +219,6 @@ router.get("/UnitedStatesViral50", async (req, res) => {
       User: user_Info.display_name
     });
   } else {
-    console.log("u dont have an access token");
   }
 });
 
@@ -279,7 +258,6 @@ router.post("/songs", async (req, res) => {
       throw ("Something went wrong: ", error);
     }
   } 
-  console.log("you dont have an access token")
 });
 
 //append a comment? dont know yet will figure out next
@@ -294,10 +272,7 @@ router.post("/songs/comments", async (req, res) => {
     let appendedComment = await appendComment(ReferenceIDDatabase, UserPostingNewComment,commentText)
     res.send(appendedComment)
 
-    console.log("u have an access token");
-  } else {
-    console.log("u dont have an access token");
-  }
+  } 
 });
 
 /******************************************************************************************************************

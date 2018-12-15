@@ -25,14 +25,7 @@ async function addSong(
     Song_name: song_name,
     Album_cover_url: Album_Cover,
     Stream_url: Stream_Url,
-    number_dailyplays: 10,
-    Comments: [
-      {
-        commentId: uuid(),
-        Text: comment,
-        UserID: user
-      }
-    ]
+    Comments: [],
   };
 
   const songCollection = await SharedSongs();
@@ -59,7 +52,6 @@ async function appendComment(postId, user, comment) {
   };
   const commentData = await returnSong(postId); //this will get the cue data based on videoId (the primary key)
   const appendedComment = commentData.Comments.push(appendModel); //this will push a new object onto the array of objects found in key "cues"
-  //console.log(commentData);
   const songCollection = await SharedSongs(); //make a reference to the collection
 
   //UPDATE the cue model in mongo with the data that was adjusted to it above!
@@ -67,7 +59,7 @@ async function appendComment(postId, user, comment) {
     { _id: postId },
     { $set: commentData }
   );
-  if (updatedComments.insertedCount === 0) console.log("Could not update the cue");
+  if (updatedComments.insertedCount === 0) console.log("Could not update the comments");
   //throw an err
   else if (updatedComments.modifiedCount === 1) return commentData; //return the cue
 }
