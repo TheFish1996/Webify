@@ -51,6 +51,7 @@ router.get("/login", function(req, res) {
 router.get("/songs", async function(req, res) {
   //songs path
   let access_token = req.query.access_token; //pulls access token from header. If possible maybe make the access token a cookie?
+  if(access_token){
   let data = await getUserInfo(access_token); //this will return a promise passing in the options object and returning the resulting data
   let GlobalTop50Data = await getSpecificCategory("GlobalTop50"); //queries database specifically for posts by category
   let GlobalViral50Data = await getSpecificCategory("GlobalViral50"); //queries database specifically for posts by category
@@ -85,6 +86,9 @@ router.get("/songs", async function(req, res) {
     GlobalViral50Data: GlobalViral50Data,
     USViral50Data: USViral50Data
   });
+} else {
+  res.redirect("/");
+}
 });
 
 router.get("/UsTop50", async (req, res) => {
