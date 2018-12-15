@@ -2,6 +2,56 @@
 
 (function ($){
 
+    for(let i=0; i<=4; i++){
+        $(`#${i} .card-header`).html(i + 1)
+    }
+
+    for(let i=10; i<=14; i++){
+        let number = i - 4;
+        $(`#${i} .card-header`).html(number)
+    }
+
+    for(let i=20; i<=24; i++){
+        let number = i - 9;
+        $(`#${i} .card-header`).html(number)
+    }
+
+    for(let i=30; i<=34; i++){
+        let number = i - 14;
+        $(`#${i} .card-header`).html(number)
+    }
+
+    for(let i=40; i<=44; i++){
+        let number = i - 19;
+        $(`#${i} .card-header`).html(number)
+    }
+
+    for(let i=50; i<=54; i++){
+        let number = i - 24;
+        $(`#${i} .card-header`).html(number)
+    }
+
+    for(let i=60; i<=64; i++){
+        let number = i - 29;
+        $(`#${i} .card-header`).html(number)
+    }
+
+    for(let i=70; i<=74; i++){
+        let number = i - 34;
+        $(`#${i} .card-header`).html(number)
+    }
+
+    for(let i=80; i<=84; i++){
+        let number = i - 39;
+        $(`#${i} .card-header`).html(number)
+    }
+
+    for(let i=90; i<=94; i++){
+        let number = i - 44;
+        $(`#${i} .card-header`).html(number)
+    }
+
+
     $(".button-song").click(function() {
         let classes = $(this).parents()
         let buttonParentID = classes[2].id //finds the id of the parent class where button was clicked
